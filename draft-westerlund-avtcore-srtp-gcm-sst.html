@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>GCM Short Secure Tags (SST) for Secure RTP</title>
+<title>GCM-SST Authenticated Encryption in the Secure Real-time Transport Protocol (SRTP)</title>
 <meta content="Magnus Westerlund" name="author">
 <meta content="John Preuß Mattsson" name="author">
 <meta content="
-       TODO Abstract 
+       This document defines how the GCM-SST (Galois Counter Mode with Strong Secure Tags) Authenticated Encryption with Associated Data (AEAD) algorithm family can be used to provide confidentiality and data authentication in the Secure Real-time Transport Protocol (SRTP). GCM-SST addresses known weaknesses in AES-GCM for short authentication tags, making it well suited for media encryption use cases where low overhead is critical. 
     " name="description">
 <meta content="xml2rfc 3.33.0" name="generator">
 <meta content="Cipher Suite" name="keyword">
@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Westerlund &amp; Preuß Mattsson</td>
-<td class="center">Expires 20 November 2026</td>
+<td class="center">Expires 21 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,17 +1060,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">Audio/Video Transport Core Maintenance</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-westerlund-avtcore-srtp-gcm-sst-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-19" class="published">19 May 2026</time>
+<time datetime="2026-05-20" class="published">20 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
-<dd class="intended-status">Informational</dd>
+<dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-20">20 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-21">21 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1084,10 +1084,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">GCM Short Secure Tags (SST) for Secure RTP</h1>
+<h1 id="title">GCM-SST Authenticated Encryption in the Secure Real-time Transport Protocol (SRTP)</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines how the GCM-SST (Galois Counter Mode with Strong Secure Tags) Authenticated Encryption with Associated Data (AEAD) algorithm family can be used to provide confidentiality and data authentication in the Secure Real-time Transport Protocol (SRTP). GCM-SST addresses known weaknesses in AES-GCM for short authentication tags, making it well suited for media encryption use cases where low overhead is critical.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1095,14 +1095,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
+        The latest revision of this draft can be found at <span><a href="https://gloinul.github.io/draft-westerlund-avtcore-srtp-gcm-sst/draft-westerlund-avtcore-srtp-gcm-sst.html">https://gloinul.github.io/draft-westerlund-avtcore-srtp-gcm-sst/draft-westerlund-avtcore-srtp-gcm-sst.html</a></span>.
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-westerlund-avtcore-srtp-gcm-sst/">https://datatracker.ietf.org/doc/draft-westerlund-avtcore-srtp-gcm-sst/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+        Audio/Video Transport Core Maintenance (AVTCORE) Working Group mailing list (<span><a href="mailto:avt@ietf.org">mailto:avt@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/avt/">https://mailarchive.ietf.org/arch/browse/avt/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/avt/">https://www.ietf.org/mailman/listinfo/avt/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/gloinul/draft-westerlund-avtcore-srtp-gcm-sst">https://github.com/gloinul/draft-westerlund-avtcore-srtp-gcm-sst</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1123,7 +1124,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1159,19 +1160,128 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-overview-of-the-srtp-srtcp-" class="internal xref">Overview of the SRTP/SRTCP AEAD Security Architecture</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-generic-aead-processing" class="internal xref">Generic AEAD Processing</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-aead-invocation-inputs-and-" class="internal xref">AEAD Invocation Inputs and Outputs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
+                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="auto internal xref">4.1.1</a>.  <a href="#name-encrypt-mode" class="internal xref">Encrypt Mode</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.2">
+                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="auto internal xref">4.1.2</a>.  <a href="#name-decrypt-mode" class="internal xref">Decrypt Mode</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-handling-of-aead-authentica" class="internal xref">Handling of AEAD Authentication</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-gcm-sst-processing-for-srtp" class="internal xref">GCM-SST Processing for SRTP</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-srtp-iv-formation-for-gcm-s" class="internal xref">SRTP IV Formation for GCM-SST</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-data-types-in-srtp-packets" class="internal xref">Data Types in SRTP Packets</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-handling-header-extensions" class="internal xref">Handling Header Extensions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-prevention-of-srtp-iv-reuse" class="internal xref">Prevention of SRTP IV Reuse</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-gcm-sst-processing-for-srtc" class="internal xref">GCM-SST Processing for SRTCP</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-srtcp-iv-formation-for-gcm-" class="internal xref">SRTCP IV Formation for GCM-SST</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-data-types-in-encrypted-srt" class="internal xref">Data Types in Encrypted SRTCP Packets</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-data-types-in-unencrypted-s" class="internal xref">Data Types in Unencrypted SRTCP Packets</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-prevention-of-srtcp-iv-reus" class="internal xref">Prevention of SRTCP IV Reuse</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-unneeded-srtp-srtcp-fields" class="internal xref">Unneeded SRTP/SRTCP Fields</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-srtp-srtcp-authentication-t" class="internal xref">SRTP/SRTCP Authentication Tag Field</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-rtp-padding" class="internal xref">RTP Padding</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-constraints-on-aead-for-srt" class="internal xref">Constraints on AEAD for SRTP and SRTCP</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-key-derivation-functions" class="internal xref">Key Derivation Functions</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-summary-of-gcm-sst-cipher-s" class="internal xref">Summary of GCM-SST Cipher Suites in SRTP/SRTCP</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-handling-of-security-critic" class="internal xref">Handling of Security-Critical Parameters</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-size-of-the-authentication-" class="internal xref">Size of the Authentication Tag</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-replay-protection" class="internal xref">Replay Protection</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-sdes" class="internal xref">SDES</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
+                <p id="section-toc.1-1.12.2.2.1"><a href="#section-12.2" class="auto internal xref">12.2</a>.  <a href="#name-dtls-srtp" class="internal xref">DTLS-SRTP</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
+                <p id="section-toc.1-1.12.2.3.1"><a href="#section-12.3" class="auto internal xref">12.3</a>.  <a href="#name-mikey" class="internal xref">MIKEY</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-parameters-for-use-with-mik" class="internal xref">Parameters for Use with MIKEY</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14.2.1">
+                <p id="section-toc.1-1.14.2.1.1"><a href="#section-14.1" class="auto internal xref">14.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14.2.2">
+                <p id="section-toc.1-1.14.2.2.1"><a href="#section-14.2" class="auto internal xref">14.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
+            <p id="section-toc.1-1.15.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
+            <p id="section-toc.1-1.16.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1182,7 +1292,23 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">The Secure Real-time Transport Protocol (SRTP) <span>[<a href="#RFC3711" class="cite xref">RFC3711</a>]</span> is a profile of the Real-time Transport Protocol (RTP) <span>[<a href="#RFC3550" class="cite xref">RFC3550</a>]</span>, which can provide confidentiality, message authentication, and replay protection to the RTP traffic and to the control traffic for RTP, the Real-time Transport Control Protocol (RTCP).<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Authenticated Encryption with Associated Data (AEAD) <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span> provides both confidentiality and integrity in a single cryptographic operation. This specification makes use of the GCM-SST (Galois Counter Mode with Strong Secure Tags) AEAD algorithm family defined in <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">AES-GCM is widely used but has known weaknesses when used with short authentication tags. The forgery probability for AES-GCM is significantly worse than ideal, and a successful forgery reveals the authentication subkey H, enabling an attacker to forge all subsequent messages. GCM-SST addresses these weaknesses by introducing an additional subkey H2 and deriving fresh subkeys H and H2 for each nonce, resulting in near-ideal forgery probabilities even for short tags and even after multiple forgery attempts.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">Short authentication tags are common in media encryption. 32-bit tags are standard in most radio link layers, 64-bit tags are common in IoT transport and application layers, and 32-, 64-, and 80-bit tags are common in media encryption applications. Audio packets are small, numerous, and ephemeral, making them highly sensitive to cryptographic overhead. GCM-SST enables the use of short tags with strong security guarantees, avoiding the need to either use larger-than-necessary tags or fall back to slower constructions such as AES-CTR combined with HMAC.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">This document defines how to use the AES-128-GCM-SST, AES-256-GCM-SST, and Rijndael-GCM-SST AEAD algorithms in SRTP and SRTCP, with authentication tag lengths of 48, 96, and 112 bits. The following cipher suites are defined:<a href="#section-1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-1-6">
+<pre>
+  AEAD_AES_128_GCM_SST_6    AES-128 with a 6-octet (48-bit) tag
+  AEAD_AES_128_GCM_SST_12   AES-128 with a 12-octet (96-bit) tag
+  AEAD_AES_128_GCM_SST_14   AES-128 with a 14-octet (112-bit) tag
+  AEAD_AES_256_GCM_SST_6    AES-256 with a 6-octet (48-bit) tag
+  AEAD_AES_256_GCM_SST_12   AES-256 with a 12-octet (96-bit) tag
+  AEAD_AES_256_GCM_SST_14   AES-256 with a 14-octet (112-bit) tag
+</pre><a href="#section-1-6" class="pilcrow">¶</a>
+</div>
+<p id="section-1-7">The key size is set when the session is initiated and <span class="bcp14">MUST NOT</span> be altered. The tag length is fixed per cipher suite and <span class="bcp14">MUST NOT</span> be altered.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">When using cipher suites with 48-bit (6-octet) tags for SRTP, SRTCP uses 96-bit (12-octet) tags. This provides adequate security for the less frequent SRTCP packets while minimizing overhead for the more numerous SRTP packets.<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1194,43 +1320,1119 @@ svg :is([fill="white"], [fill^="#fff"]) {
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The following terms have specific meanings in this document:<a href="#section-2-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-3">
+        <dt id="section-2-3.1">Instantiation:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.2">
+          <p id="section-2-3.2.1">In AEAD, an instantiation is an (Encryption_key, salt) pair together with all data structures needed for it to function properly. In SRTP/SRTCP, each endpoint needs two instantiations of the AEAD algorithm for each master key: one for SRTP traffic and one for SRTCP traffic.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.3">Invocation:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.4">
+          <p id="section-2-3.4.1">SRTP/SRTCP data streams are broken into packets. Each packet is processed by a single invocation of the appropriate instantiation of the AEAD algorithm.<a href="#section-2-3.4.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.5">Associated Data:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.6">
+          <p id="section-2-3.6.1">Data that is authenticated but not encrypted.<a href="#section-2-3.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.7">Plaintext:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.8">
+          <p id="section-2-3.8.1">Data that is both encrypted and authenticated.<a href="#section-2-3.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.9">Raw Data:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.10">
+          <p id="section-2-3.10.1">Data that is neither encrypted nor authenticated.<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="overview-of-the-srtpsrtcp-aead-security-architecture">
+<section id="section-3">
+      <h2 id="name-overview-of-the-srtp-srtcp-">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-overview-of-the-srtp-srtcp-" class="section-name selfRef">Overview of the SRTP/SRTCP AEAD Security Architecture</a>
+      </h2>
+<p id="section-3-1">SRTP/SRTCP AEAD security is based upon the following principles:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">a. Both privacy and authentication are based upon the use of symmetric algorithms. An AEAD algorithm such as GCM-SST combines privacy and authentication into a single process.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">b. A secret master key is shared by all participating endpoints. Any given master key <span class="bcp14">MAY</span> be used simultaneously by several endpoints to originate SRTP/SRTCP packets.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">c. A Key Derivation Function (KDF) is applied to the shared master key to form separate encryption keys and salting keys for SRTP and SRTCP. Since AEAD algorithms combine encryption and authentication into a single process, AEAD algorithms do not make use of separate authentication keys.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">d. The details of how the master key is established and shared between participants are outside the scope of this document. Any mechanism for rekeying an existing session is also outside the scope of this document.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">e. Each time GCM-SST is invoked to encrypt and authenticate an SRTP or SRTCP packet, a new Initialization Vector (IV) is used. SRTP combines the 4-octet Synchronization Source (SSRC) identifier, the 4-octet Rollover Counter (ROC), and the 2-octet Sequence Number (SEQ) with the 12-octet encryption salt to form a 12-octet IV (see <a href="#srtp-iv" class="auto internal xref">Section 5.1</a>). SRTCP combines the SSRC and 31-bit SRTCP index with the encryption salt to form a 12-octet IV (see <a href="#srtcp-iv" class="auto internal xref">Section 6.1</a>).<a href="#section-3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="generic-aead-processing">
+<section id="section-4">
+      <h2 id="name-generic-aead-processing">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-generic-aead-processing" class="section-name selfRef">Generic AEAD Processing</a>
+      </h2>
+<div id="aead-invocation-inputs-and-outputs">
+<section id="section-4.1">
+        <h3 id="name-aead-invocation-inputs-and-">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-aead-invocation-inputs-and-" class="section-name selfRef">AEAD Invocation Inputs and Outputs</a>
+        </h3>
+<div id="encrypt-mode">
+<section id="section-4.1.1">
+          <h4 id="name-encrypt-mode">
+<a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-encrypt-mode" class="section-name selfRef">Encrypt Mode</a>
+          </h4>
+<div class="alignLeft art-text artwork" id="section-4.1.1-1">
+<pre>
+  Inputs:
+    Encryption_key         Octet string, 16 or 32 octets
+    Initialization_Vector  Octet string, 12 octets
+    Associated_Data        Octet string of variable length
+    Plaintext              Octet string of variable length
+
+  Outputs:
+    Ciphertext             Octet string, length =
+                             length(Plaintext) + tag_length
+</pre><a href="#section-4.1.1-1" class="pilcrow">¶</a>
+</div>
+<p id="section-4.1.1-2">The ciphertext consists of the encrypted Plaintext followed by the authentication tag.<a href="#section-4.1.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="decrypt-mode">
+<section id="section-4.1.2">
+          <h4 id="name-decrypt-mode">
+<a href="#section-4.1.2" class="section-number selfRef">4.1.2. </a><a href="#name-decrypt-mode" class="section-name selfRef">Decrypt Mode</a>
+          </h4>
+<div class="alignLeft art-text artwork" id="section-4.1.2-1">
+<pre>
+  Inputs:
+    Encryption_key         Octet string, 16 or 32 octets
+    Initialization_Vector  Octet string, 12 octets
+    Associated_Data        Octet string of variable length
+    Ciphertext             Octet string of variable length
+
+  Outputs:
+    Plaintext              Octet string, length = length(Ciphertext) - tag_length
+    Validity_Flag          Boolean, TRUE if valid, FALSE otherwise
+</pre><a href="#section-4.1.2-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="handling-of-aead-authentication">
+<section id="section-4.2">
+        <h3 id="name-handling-of-aead-authentica">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-handling-of-aead-authentica" class="section-name selfRef">Handling of AEAD Authentication</a>
+        </h3>
+<p id="section-4.2-1">All incoming packets <span class="bcp14">MUST</span> pass AEAD authentication before any other action takes place. Plaintext and Associated Data <span class="bcp14">MUST NOT</span> be released until the AEAD authentication tag has been validated. Should the AEAD tag prove to be invalid, the packet <span class="bcp14">MUST</span> be discarded.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="gcm-sst-processing-for-srtp">
+<section id="section-5">
+      <h2 id="name-gcm-sst-processing-for-srtp">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-gcm-sst-processing-for-srtp" class="section-name selfRef">GCM-SST Processing for SRTP</a>
+      </h2>
+<div id="srtp-iv">
+<section id="section-5.1">
+        <h3 id="name-srtp-iv-formation-for-gcm-s">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-srtp-iv-formation-for-gcm-s" class="section-name selfRef">SRTP IV Formation for GCM-SST</a>
+        </h3>
+<span id="name-gcm-sst-srtp-initialization"></span><div id="fig-srtp-iv">
+<figure id="figure-1">
+          <div class="alignLeft art-text artwork" id="section-5.1-1.1">
+<pre>
+              0  0  0  0  0  0  0  0  0  0  1  1
+              0  1  2  3  4  5  6  7  8  9  0  1
+            +--+--+--+--+--+--+--+--+--+--+--+--+
+            |00|00|    SSRC   |     ROC   | SEQ |---+
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                     |
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+            |         Encryption Salt           |-&gt;(+)
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                     |
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+            |       Initialization Vector       |&lt;--+
+            +--+--+--+--+--+--+--+--+--+--+--+--+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-gcm-sst-srtp-initialization" class="selfRef">GCM-SST SRTP Initialization Vector Formation</a>
+          </figcaption></figure>
+</div>
+<p id="section-5.1-2">The 12-octet IV used by GCM-SST SRTP is formed by first concatenating 2 octets of zeroes, the 4-octet SSRC, the 4-octet rollover counter (ROC), and the 2-octet sequence number (SEQ). The resulting 12-octet value is then XORed with the 12-octet salt to form the IV.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="data-types-in-srtp-packets">
+<section id="section-5.2">
+        <h3 id="name-data-types-in-srtp-packets">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-data-types-in-srtp-packets" class="section-name selfRef">Data Types in SRTP Packets</a>
+        </h3>
+<p id="section-5.2-1">All SRTP packets <span class="bcp14">MUST</span> be both authenticated and encrypted. The data fields within RTP packets are broken into Associated Data, Plaintext, and Raw Data as follows:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-5.2-2">
+          <dt id="section-5.2-2.1">Associated Data:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.2">
+            <p id="section-5.2-2.2.1">The RTP header fields: version V (2 bits), padding flag P (1 bit), extension flag X (1 bit), CSRC count CC (4 bits), marker M (1 bit), Payload Type PT (7 bits), sequence number (16 bits), timestamp (32 bits), SSRC (32 bits), optional CSRC identifiers, and optional RTP extension.<a href="#section-5.2-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-2.3">Plaintext:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.4">
+            <p id="section-5.2-2.4.1">The RTP payload, RTP padding (if used), and RTP pad count (if used).<a href="#section-5.2-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-2.5">Raw Data:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.6">
+            <p id="section-5.2-2.6.1">The optional SRTP Master Key Identifier (MKI) and SRTP authentication tag (whose use is <span class="bcp14">NOT RECOMMENDED</span>).<a href="#section-5.2-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<span id="name-rtp-packet-before-authentic"></span><div id="fig-srtp-pre">
+<figure id="figure-2">
+          <div class="alignLeft art-text artwork" id="section-5.2-3.1">
+<pre>
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|V=2|P|X|  CC   |M|     PT      |       sequence number         |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|                           timestamp                           |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|           synchronization source (SSRC) identifier            |
+ +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+A|            contributing source (CSRC) identifiers             |
+A|                             ....                              |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|                   RTP extension (OPTIONAL)                    |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+P|                          payload  ...                         |
+P|                               +-------------------------------+
+P|                               | RTP padding   | RTP pad count |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+  P = Plaintext   A = Associated Data
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-rtp-packet-before-authentic" class="selfRef">RTP Packet before Authenticated Encryption</a>
+          </figcaption></figure>
+</div>
+<span id="name-srtp-packet-after-authentic"></span><div id="fig-srtp-post">
+<figure id="figure-3">
+          <div class="alignLeft art-text artwork" id="section-5.2-4.1">
+<pre>
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|V=2|P|X|  CC   |M|     PT      |       sequence number         |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|                           timestamp                           |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|           synchronization source (SSRC) identifier            |
+ +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+A|            contributing source (CSRC) identifiers             |
+A|                             ....                              |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|                   RTP extension (OPTIONAL)                    |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+C|                          cipher ...                           |
+C|                             ...                               |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+R:                     SRTP MKI (OPTIONAL)                       :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+R:           SRTP authentication tag (NOT RECOMMENDED)           :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+  C = Ciphertext   A = Associated Data   R = Raw Data
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-srtp-packet-after-authentic" class="selfRef">SRTP Packet after Authenticated Encryption</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="handling-header-extensions">
+<section id="section-5.3">
+        <h3 id="name-handling-header-extensions">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-handling-header-extensions" class="section-name selfRef">Handling Header Extensions</a>
+        </h3>
+<p id="section-5.3-1">When <span>[<a href="#RFC6904" class="cite xref">RFC6904</a>]</span> is in use, a separate keystream is generated to encrypt selected RTP header extension elements. For GCM-SST cipher suites using AES-128 keys, this keystream <span class="bcp14">MUST</span> be generated using the AES_128_CM transform. For GCM-SST cipher suites using AES-256 keys, the keystream <span class="bcp14">MUST</span> be generated using the AES_256_CM transform. The originator <span class="bcp14">MUST</span> perform any required header extension encryption before the AEAD algorithm is invoked.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">Both encrypted and unencrypted header extensions are treated by the AEAD algorithm as Associated Data. The AEAD algorithm therefore provides integrity and authentication for header extensions but no additional privacy beyond what RFC 6904 provides.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="srtp-iv-reuse">
+<section id="section-5.4">
+        <h3 id="name-prevention-of-srtp-iv-reuse">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-prevention-of-srtp-iv-reuse" class="section-name selfRef">Prevention of SRTP IV Reuse</a>
+        </h3>
+<p id="section-5.4-1">To prevent IV reuse, the (ROC, SEQ, SSRC) triple <span class="bcp14">MUST</span> never be used twice with the same master key. A rekey <span class="bcp14">MUST</span> be performed before the (ROC, SEQ) pair cycles back to its original value. For a given master key, the set of all SSRC values <span class="bcp14">MUST</span> be partitioned into disjoint pools, one per originating endpoint, and each endpoint <span class="bcp14">MUST</span> only use SSRC values from its assigned pool.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="gcm-sst-processing-for-srtcp">
+<section id="section-6">
+      <h2 id="name-gcm-sst-processing-for-srtc">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-gcm-sst-processing-for-srtc" class="section-name selfRef">GCM-SST Processing for SRTCP</a>
+      </h2>
+<p id="section-6-1">All SRTCP compound packets <span class="bcp14">MUST</span> be authenticated. SRTCP packet encryption is optional and indicated by a 1-bit Encryption flag located just before the 31-bit SRTCP index.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">When using the AEAD_AES_128_GCM_SST_6 or AEAD_AES_256_GCM_SST_6 cipher suites (which use 48-bit tags for SRTP), implementations <span class="bcp14">MUST</span> use 96-bit (12-octet) authentication tags for SRTCP packets. For all other cipher suites, the SRTCP tag length <span class="bcp14">MUST</span> match the SRTP tag length.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<div id="srtcp-iv">
+<section id="section-6.1">
+        <h3 id="name-srtcp-iv-formation-for-gcm-">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-srtcp-iv-formation-for-gcm-" class="section-name selfRef">SRTCP IV Formation for GCM-SST</a>
+        </h3>
+<span id="name-gcm-sst-srtcp-initializatio"></span><div id="fig-srtcp-iv">
+<figure id="figure-4">
+          <div class="alignLeft art-text artwork" id="section-6.1-1.1">
+<pre>
+              0  1  2  3  4  5  6  7  8  9 10 11
+            +--+--+--+--+--+--+--+--+--+--+--+--+
+            |00|00|    SSRC   |00|00|0+SRTCP Idx|---+
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                     |
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+            |         Encryption Salt           |-&gt;(+)
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                     |
+            +--+--+--+--+--+--+--+--+--+--+--+--+   |
+            |       Initialization Vector       |&lt;--+
+            +--+--+--+--+--+--+--+--+--+--+--+--+
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-gcm-sst-srtcp-initializatio" class="selfRef">GCM-SST SRTCP Initialization Vector Formation</a>
+          </figcaption></figure>
+</div>
+<p id="section-6.1-2">The 12-octet IV used by GCM-SST SRTCP is formed by concatenating 2 octets of zeroes, the 4-octet SSRC, 2 octets of zeroes, a single "0" bit, and the 31-bit SRTCP index. The resulting 12-octet value is then XORed with the 12-octet salt to form the IV.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="data-types-in-encrypted-srtcp-packets">
+<section id="section-6.2">
+        <h3 id="name-data-types-in-encrypted-srt">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-data-types-in-encrypted-srt" class="section-name selfRef">Data Types in Encrypted SRTCP Packets</a>
+        </h3>
+<p id="section-6.2-1">When the Encryption flag is set to 1:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-6.2-2">
+          <dt id="section-6.2-2.1">Associated Data:</dt>
+          <dd style="margin-left: 1.5em" id="section-6.2-2.2">
+            <p id="section-6.2-2.2.1">Version V (2 bits), padding flag P (1 bit), reception report count RC (5 bits), Packet Type (8 bits), length (2 octets), SSRC (4 octets), Encryption flag (1 bit), and SRTCP index (31 bits).<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-6.2-2.3">Plaintext:</dt>
+          <dd style="margin-left: 1.5em" id="section-6.2-2.4">
+            <p id="section-6.2-2.4.1">All other data.<a href="#section-6.2-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-6.2-2.5">Raw Data:</dt>
+          <dd style="margin-left: 1.5em" id="section-6.2-2.6">
+            <p id="section-6.2-2.6.1">The optional SRTCP MKI and SRTCP authentication tag (<span class="bcp14">NOT RECOMMENDED</span>).<a href="#section-6.2-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<span id="name-aead-srtcp-inputs-when-encr"></span><div id="fig-srtcp-enc">
+<figure id="figure-5">
+          <div class="alignLeft art-text artwork" id="section-6.2-3.1">
+<pre>
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|V=2|P|   RC    |  Packet Type  |            length             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|           synchronization source (SSRC) of sender             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+P|                         sender info                           :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+P|                        report blocks ...                      :
+ +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+P|                       additional packets ...                  :
+ +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+A|1|                         SRTCP index                         |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+R:                  SRTCP MKI (OPTIONAL)                         :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+R:           SRTCP authentication tag (NOT RECOMMENDED)          :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+  P = Plaintext   A = Associated Data   R = Raw Data
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-aead-srtcp-inputs-when-encr" class="selfRef">AEAD SRTCP Inputs When Encryption Flag = 1</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="data-types-in-unencrypted-srtcp-packets">
+<section id="section-6.3">
+        <h3 id="name-data-types-in-unencrypted-s">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-data-types-in-unencrypted-s" class="section-name selfRef">Data Types in Unencrypted SRTCP Packets</a>
+        </h3>
+<p id="section-6.3-1">When the Encryption flag is set to 0:<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-6.3-2">
+          <dt id="section-6.3-2.1">Plaintext:</dt>
+          <dd style="margin-left: 1.5em" id="section-6.3-2.2">
+            <p id="section-6.3-2.2.1">None.<a href="#section-6.3-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-6.3-2.3">Associated Data:</dt>
+          <dd style="margin-left: 1.5em" id="section-6.3-2.4">
+            <p id="section-6.3-2.4.1">All data except the optional SRTCP MKI and authentication tag.<a href="#section-6.3-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-6.3-2.5">Raw Data:</dt>
+          <dd style="margin-left: 1.5em" id="section-6.3-2.6">
+            <p id="section-6.3-2.6.1">The optional SRTCP MKI and SRTCP authentication tag (<span class="bcp14">NOT RECOMMENDED</span>).<a href="#section-6.3-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<span id="name-aead-srtcp-inputs-when-encry"></span><div id="fig-srtcp-unenc">
+<figure id="figure-6">
+          <div class="alignLeft art-text artwork" id="section-6.3-3.1">
+<pre>
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|V=2|P|   RC    |  Packet Type  |            length             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|           synchronization source (SSRC) of sender             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|                         sender info                           :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+A|                        report blocks ...                      :
+ +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+A|                       additional packets ...                  :
+ +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+A|0|                         SRTCP index                         |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+R:                  SRTCP MKI (OPTIONAL)                         :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+R:              authentication tag (NOT RECOMMENDED)             :
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+  A = Associated Data   R = Raw Data
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-aead-srtcp-inputs-when-encry" class="selfRef">AEAD SRTCP Inputs When Encryption Flag = 0</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="prevention-of-srtcp-iv-reuse">
+<section id="section-6.4">
+        <h3 id="name-prevention-of-srtcp-iv-reus">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-prevention-of-srtcp-iv-reus" class="section-name selfRef">Prevention of SRTCP IV Reuse</a>
+        </h3>
+<p id="section-6.4-1">A new master key <span class="bcp14">MUST</span> be established before the 31-bit SRTCP index cycles back to its original value. The comments on SSRC management in <a href="#srtp-iv-reuse" class="auto internal xref">Section 5.4</a> also apply to SRTCP.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="unneeded-srtpsrtcp-fields">
+<section id="section-7">
+      <h2 id="name-unneeded-srtp-srtcp-fields">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-unneeded-srtp-srtcp-fields" class="section-name selfRef">Unneeded SRTP/SRTCP Fields</a>
+      </h2>
+<div id="srtpsrtcp-authentication-tag-field">
+<section id="section-7.1">
+        <h3 id="name-srtp-srtcp-authentication-t">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-srtp-srtcp-authentication-t" class="section-name selfRef">SRTP/SRTCP Authentication Tag Field</a>
+        </h3>
+<p id="section-7.1-1">The AEAD message authentication mechanism <span class="bcp14">MUST</span> be the primary message authentication mechanism. Additional SRTP/SRTCP authentication mechanisms <span class="bcp14">SHOULD NOT</span> be used, and the optional SRTP/SRTCP authentication tags are <span class="bcp14">NOT RECOMMENDED</span> and <span class="bcp14">SHOULD NOT</span> be present.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="rtp-padding">
+<section id="section-7.2">
+        <h3 id="name-rtp-padding">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-rtp-padding" class="section-name selfRef">RTP Padding</a>
+        </h3>
+<p id="section-7.2-1">GCM-SST does not require data to be padded to a specific block size. It is <span class="bcp14">RECOMMENDED</span> that the RTP padding mechanism not be used unless necessary to disguise the length of the underlying Plaintext.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="constraints-on-aead-for-srtp-and-srtcp">
+<section id="section-8">
+      <h2 id="name-constraints-on-aead-for-srt">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-constraints-on-aead-for-srt" class="section-name selfRef">Constraints on AEAD for SRTP and SRTCP</a>
+      </h2>
+<p id="section-8-1">All AEAD algorithms used with SRTP/SRTCP <span class="bcp14">MUST</span> satisfy the following constraints:<a href="#section-8-1" class="pilcrow">¶</a></p>
+<span id="name-aead-constraints-for-srtp-s"></span><table class="center" id="table-1">
+        <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-aead-constraints-for-srtp-s" class="selfRef">AEAD Constraints for SRTP/SRTCP</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">Meaning</th>
+            <th class="text-left" rowspan="1" colspan="1">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">A_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">Maximum Associated Data length</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">MUST</span> be at least 12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">N_MIN</td>
+            <td class="text-left" rowspan="1" colspan="1">Minimum nonce (IV) length</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">MUST</span> be 12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">N_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">Maximum nonce (IV) length</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <span class="bcp14">MUST</span> be 12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">P_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">Maximum Plaintext length</td>
+            <td class="text-left" rowspan="1" colspan="1">See <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">C_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">Maximum ciphertext length</td>
+            <td class="text-left" rowspan="1" colspan="1">P_MAX + tag_length</td>
+          </tr>
+        </tbody>
+      </table>
+<p id="section-8-3">Additional parameters:<a href="#section-8-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8-4.1">
+          <p id="section-8-4.1.1">Maximum number of invocations for a given instantiation: SRTP <span class="bcp14">MUST</span> be at most 2^48; SRTCP <span class="bcp14">MUST</span> be at most 2^31.<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+</section>
+</div>
+<div id="key-derivation-functions">
+<section id="section-9">
+      <h2 id="name-key-derivation-functions">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-key-derivation-functions" class="section-name selfRef">Key Derivation Functions</a>
+      </h2>
+<p id="section-9-1">A Key Derivation Function (KDF) is used to derive all required encryption keys and salts from the shared master key. The AES-128-GCM-SST cipher suites <span class="bcp14">MUST</span> use the AES_128_CM_PRF KDF described in <span>[<a href="#RFC3711" class="cite xref">RFC3711</a>]</span>. The AES-256-GCM-SST cipher suites <span class="bcp14">MUST</span> use the AES_256_CM_PRF KDF described in <span>[<a href="#RFC6188" class="cite xref">RFC6188</a>]</span>.<a href="#section-9-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="summary-of-gcm-sst-cipher-suites-in-srtpsrtcp">
+<section id="section-10">
+      <h2 id="name-summary-of-gcm-sst-cipher-s">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-summary-of-gcm-sst-cipher-s" class="section-name selfRef">Summary of GCM-SST Cipher Suites in SRTP/SRTCP</a>
+      </h2>
+<p id="section-10-1">The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:<a href="#section-10-1" class="pilcrow">¶</a></p>
+<span id="name-gcm-sst-cipher-suites-for-s"></span><table class="center" id="table-2">
+        <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-gcm-sst-cipher-suites-for-s" class="selfRef">GCM-SST Cipher Suites for SRTP/SRTCP</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Name</th>
+            <th class="text-left" rowspan="1" colspan="1">Key Size</th>
+            <th class="text-left" rowspan="1" colspan="1">Tag Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_6</td>
+            <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">6 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_12</td>
+            <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_14</td>
+            <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">14 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_6</td>
+            <td class="text-left" rowspan="1" colspan="1">32 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">6 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_12</td>
+            <td class="text-left" rowspan="1" colspan="1">32 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_14</td>
+            <td class="text-left" rowspan="1" colspan="1">32 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">14 octets</td>
+          </tr>
+        </tbody>
+      </table>
+<span id="name-aead_aes_128_gcm_sst_6-cryp"></span><table class="center" id="table-3">
+        <caption>
+<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-aead_aes_128_gcm_sst_6-cryp" class="selfRef">AEAD_AES_128_GCM_SST_6 Crypto Suite</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_6</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master key length</td>
+            <td class="text-left" rowspan="1" colspan="1">128 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master salt length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Key Derivation Function</td>
+            <td class="text-left" rowspan="1" colspan="1">AES_128_CM_PRF <span>[<a href="#RFC3711" class="cite xref">RFC3711</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
+            <td class="text-left" rowspan="1" colspan="1">48 bits</td>
+          </tr>
+        </tbody>
+      </table>
+<span id="name-aead_aes_128_gcm_sst_12-cry"></span><table class="center" id="table-4">
+        <caption>
+<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#name-aead_aes_128_gcm_sst_12-cry" class="selfRef">AEAD_AES_128_GCM_SST_12 Crypto Suite</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_12</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master key length</td>
+            <td class="text-left" rowspan="1" colspan="1">128 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master salt length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Key Derivation Function</td>
+            <td class="text-left" rowspan="1" colspan="1">AES_128_CM_PRF <span>[<a href="#RFC3711" class="cite xref">RFC3711</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+        </tbody>
+      </table>
+<span id="name-aead_aes_128_gcm_sst_14-cry"></span><table class="center" id="table-5">
+        <caption>
+<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#name-aead_aes_128_gcm_sst_14-cry" class="selfRef">AEAD_AES_128_GCM_SST_14 Crypto Suite</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_14</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master key length</td>
+            <td class="text-left" rowspan="1" colspan="1">128 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master salt length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Key Derivation Function</td>
+            <td class="text-left" rowspan="1" colspan="1">AES_128_CM_PRF <span>[<a href="#RFC3711" class="cite xref">RFC3711</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
+            <td class="text-left" rowspan="1" colspan="1">112 bits</td>
+          </tr>
+        </tbody>
+      </table>
+<span id="name-aead_aes_256_gcm_sst_6-cryp"></span><table class="center" id="table-6">
+        <caption>
+<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#name-aead_aes_256_gcm_sst_6-cryp" class="selfRef">AEAD_AES_256_GCM_SST_6 Crypto Suite</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_6</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master key length</td>
+            <td class="text-left" rowspan="1" colspan="1">256 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master salt length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Key Derivation Function</td>
+            <td class="text-left" rowspan="1" colspan="1">AES_256_CM_PRF <span>[<a href="#RFC6188" class="cite xref">RFC6188</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
+            <td class="text-left" rowspan="1" colspan="1">48 bits</td>
+          </tr>
+        </tbody>
+      </table>
+<span id="name-aead_aes_256_gcm_sst_12-cry"></span><table class="center" id="table-7">
+        <caption>
+<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#name-aead_aes_256_gcm_sst_12-cry" class="selfRef">AEAD_AES_256_GCM_SST_12 Crypto Suite</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_12</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master key length</td>
+            <td class="text-left" rowspan="1" colspan="1">256 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master salt length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Key Derivation Function</td>
+            <td class="text-left" rowspan="1" colspan="1">AES_256_CM_PRF <span>[<a href="#RFC6188" class="cite xref">RFC6188</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+        </tbody>
+      </table>
+<span id="name-aead_aes_256_gcm_sst_14-cry"></span><table class="center" id="table-8">
+        <caption>
+<a href="#table-8" class="selfRef">Table 8</a>:
+<a href="#name-aead_aes_256_gcm_sst_14-cry" class="selfRef">AEAD_AES_256_GCM_SST_14 Crypto Suite</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Parameter</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_14</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master key length</td>
+            <td class="text-left" rowspan="1" colspan="1">256 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Master salt length</td>
+            <td class="text-left" rowspan="1" colspan="1">96 bits</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Key Derivation Function</td>
+            <td class="text-left" rowspan="1" colspan="1">AES_256_CM_PRF <span>[<a href="#RFC6188" class="cite xref">RFC6188</a>]</span>
+</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
+            <td class="text-left" rowspan="1" colspan="1">112 bits</td>
+          </tr>
+        </tbody>
+      </table>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-3">
+<section id="section-11">
       <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="handling-of-security-critical-parameters">
+<section id="section-11.1">
+        <h3 id="name-handling-of-security-critic">
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-handling-of-security-critic" class="section-name selfRef">Handling of Security-Critical Parameters</a>
+        </h3>
+<p id="section-11.1-1">The following security-critical parameters must be handled properly:<a href="#section-11.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-11.1-2.1">
+            <p id="section-11.1-2.1.1">The master salt, if kept secret, <span class="bcp14">MUST</span> be properly erased when no longer needed.<a href="#section-11.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-11.1-2.2">
+            <p id="section-11.1-2.2.1">The secret master key and all keys derived from it <span class="bcp14">MUST</span> be kept secret and <span class="bcp14">MUST</span> be properly erased when no longer needed.<a href="#section-11.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-11.1-2.3">
+            <p id="section-11.1-2.3.1">Each time a rekey occurs, the initial values of both the 31-bit SRTCP index and the 48-bit SRTP packet index (ROC||SEQ) <span class="bcp14">MUST</span> be saved to prevent IV reuse.<a href="#section-11.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-11.1-2.4">
+            <p id="section-11.1-2.4.1">Processing <span class="bcp14">MUST</span> cease if either the 31-bit SRTCP index or the 48-bit SRTP packet index cycles back to its initial value. Processing <span class="bcp14">MUST NOT</span> resume until a new session has been established using a new master key.<a href="#section-11.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-11.1-2.5">
+            <p id="section-11.1-2.5.1">GCM-SST <span class="bcp14">MUST</span> be used in a nonce-respecting setting. For a given key, a nonce <span class="bcp14">MUST</span> only be used once in the encryption function and only once in a successful decryption function call. Nonce reuse enables universal forgery.<a href="#section-11.1-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="size-of-the-authentication-tag">
+<section id="section-11.2">
+        <h3 id="name-size-of-the-authentication-">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-size-of-the-authentication-" class="section-name selfRef">Size of the Authentication Tag</a>
+        </h3>
+<p id="section-11.2-1">The GCM-SST tag_length <span class="bcp14">SHOULD NOT</span> be smaller than 4 bytes. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations <span class="bcp14">MUST</span> use the tag length associated with the negotiated cipher suite and <span class="bcp14">MUST NOT</span> truncate or extend the tag.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="replay-protection">
+<section id="section-11.3">
+        <h3 id="name-replay-protection">
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-replay-protection" class="section-name selfRef">Replay Protection</a>
+        </h3>
+<p id="section-11.3-1">GCM-SST <span class="bcp14">MUST</span> be used with replay protection. The SRTP sequence number and rollover counter, or the SRTCP index, provide the basis for replay protection. For examples of replay protection mechanisms, see <span>[<a href="#RFC4303" class="cite xref">RFC4303</a>]</span> and <span>[<a href="#RFC6479" class="cite xref">RFC6479</a>]</span>.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-12">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="sdes">
+<section id="section-12.1">
+        <h3 id="name-sdes">
+<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-sdes" class="section-name selfRef">SDES</a>
+        </h3>
+<p id="section-12.1-1">"Session Description Protocol (SDP) Security Descriptions for Media Streams" <span>[<a href="#RFC4568" class="cite xref">RFC4568</a>]</span> defines SRTP crypto suites. IANA is requested to register the following crypto suites in the "SRTP Crypto Suite Registrations" subregistry:<a href="#section-12.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.1-2">
+<pre>
+  srtp-crypto-suite-ext = "AEAD_AES_128_GCM_SST_6"  /
+                          "AEAD_AES_128_GCM_SST_12" /
+                          "AEAD_AES_128_GCM_SST_14" /
+                          "AEAD_AES_256_GCM_SST_6"  /
+                          "AEAD_AES_256_GCM_SST_12" /
+                          "AEAD_AES_256_GCM_SST_14" /
+                          srtp-crypto-suite-ext
+</pre><a href="#section-12.1-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<div id="dtls-srtp">
+<section id="section-12.2">
+        <h3 id="name-dtls-srtp">
+<a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-dtls-srtp" class="section-name selfRef">DTLS-SRTP</a>
+        </h3>
+<p id="section-12.2-1">DTLS-SRTP <span>[<a href="#RFC5764" class="cite xref">RFC5764</a>]</span> defines SRTP protection profiles. IANA is requested to register the following SRTP protection profiles:<a href="#section-12.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.2-2">
+<pre>
+  SRTP_AEAD_AES_128_GCM_SST_6   = {0x00, TBD1}
+  SRTP_AEAD_AES_128_GCM_SST_12  = {0x00, TBD2}
+  SRTP_AEAD_AES_128_GCM_SST_14  = {0x00, TBD3}
+  SRTP_AEAD_AES_256_GCM_SST_6   = {0x00, TBD4}
+  SRTP_AEAD_AES_256_GCM_SST_12  = {0x00, TBD5}
+  SRTP_AEAD_AES_256_GCM_SST_14  = {0x00, TBD6}
+</pre><a href="#section-12.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-12.2-3">The SRTP transform parameters for each protection profile are as follows:<a href="#section-12.2-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.2-4">
+<pre>
+  SRTP_AEAD_AES_128_GCM_SST_6
+    cipher:                 AES_128_GCM_SST
+    cipher_key_length:      128 bits
+    cipher_salt_length:     96 bits
+    aead_auth_tag_length:   6 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_AES_128_GCM_SST_12
+    cipher:                 AES_128_GCM_SST
+    cipher_key_length:      128 bits
+    cipher_salt_length:     96 bits
+    aead_auth_tag_length:   12 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_AES_128_GCM_SST_14
+    cipher:                 AES_128_GCM_SST
+    cipher_key_length:      128 bits
+    cipher_salt_length:     96 bits
+    aead_auth_tag_length:   14 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_AES_256_GCM_SST_6
+    cipher:                 AES_256_GCM_SST
+    cipher_key_length:      256 bits
+    cipher_salt_length:     96 bits
+    aead_auth_tag_length:   6 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_AES_256_GCM_SST_12
+    cipher:                 AES_256_GCM_SST
+    cipher_key_length:      256 bits
+    cipher_salt_length:     96 bits
+    aead_auth_tag_length:   12 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_AES_256_GCM_SST_14
+    cipher:                 AES_256_GCM_SST
+    cipher_key_length:      256 bits
+    cipher_salt_length:     96 bits
+    aead_auth_tag_length:   14 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+</pre><a href="#section-12.2-4" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="mikey">
+<section id="section-12.3">
+        <h3 id="name-mikey">
+<a href="#section-12.3" class="section-number selfRef">12.3. </a><a href="#name-mikey" class="section-name selfRef">MIKEY</a>
+        </h3>
+<p id="section-12.3-1">In accordance with <span>[<a href="#RFC3830" class="cite xref">RFC3830</a>]</span>, IANA is requested to add the following to the "Encryption algorithm (Value 0)" subregistry:<a href="#section-12.3-1" class="pilcrow">¶</a></p>
+<span id="name-mikey-encryption-algorithm-"></span><table class="center" id="table-9">
+          <caption>
+<a href="#table-9" class="selfRef">Table 9</a>:
+<a href="#name-mikey-encryption-algorithm-" class="selfRef">MIKEY Encryption Algorithm Registration</a>
+          </caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">SRTP Encr. Algorithm</th>
+              <th class="text-left" rowspan="1" colspan="1">Value</th>
+              <th class="text-left" rowspan="1" colspan="1">Default Session Encr. Key Length</th>
+              <th class="text-left" rowspan="1" colspan="1">Default Auth. Tag Length</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+              <td class="text-left" rowspan="1" colspan="1">TBD7</td>
+              <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+              <td class="text-left" rowspan="1" colspan="1">variable</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+</section>
+</div>
+<div id="parameters-for-use-with-mikey">
+<section id="section-13">
+      <h2 id="name-parameters-for-use-with-mik">
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-parameters-for-use-with-mik" class="section-name selfRef">Parameters for Use with MIKEY</a>
       </h2>
+<p id="section-13-1">MIKEY specifies the algorithm family separately from the key length and authentication tag length.<a href="#section-13-1" class="pilcrow">¶</a></p>
+<span id="name-mapping-mikey-parameters-to"></span><table class="center" id="table-10">
+        <caption>
+<a href="#table-10" class="selfRef">Table 10</a>:
+<a href="#name-mapping-mikey-parameters-to" class="selfRef">Mapping MIKEY Parameters to GCM-SST AEAD Algorithms</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">AEAD Algorithm</th>
+            <th class="text-left" rowspan="1" colspan="1">Encryption Algorithm</th>
+            <th class="text-left" rowspan="1" colspan="1">Encryption Key Length</th>
+            <th class="text-left" rowspan="1" colspan="1">AEAD Auth. Tag Length</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_6</td>
+            <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+            <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">6 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_12</td>
+            <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+            <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_128_GCM_SST_14</td>
+            <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+            <td class="text-left" rowspan="1" colspan="1">16 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">14 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_6</td>
+            <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+            <td class="text-left" rowspan="1" colspan="1">32 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">6 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_12</td>
+            <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+            <td class="text-left" rowspan="1" colspan="1">32 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">12 octets</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">AEAD_AES_256_GCM_SST_14</td>
+            <td class="text-left" rowspan="1" colspan="1">AES-GCM-SST</td>
+            <td class="text-left" rowspan="1" colspan="1">32 octets</td>
+            <td class="text-left" rowspan="1" colspan="1">14 octets</td>
+          </tr>
+        </tbody>
+      </table>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-14">
+      <h2 id="name-references">
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-14.1">
+        <h3 id="name-normative-references">
+<a href="#section-14.1" class="section-number selfRef">14.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
-<dt id="I-D.draft-mattsson-cfrg-aes-gcm-sst">[I-D.draft-mattsson-cfrg-aes-gcm-sst]</dt>
-      <dd>
+<dt id="I-D.mattsson-cfrg-aes-gcm-sst">[I-D.mattsson-cfrg-aes-gcm-sst]</dt>
+        <dd>
 <span class="refAuthor">Campagna, M.</span>, <span class="refAuthor">Maximov, A.</span>, and <span class="refAuthor">J. P. Mattsson</span>, <span class="refTitle">"Galois Counter Mode with Strong Secure Tags (GCM-SST)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-mattsson-cfrg-aes-gcm-sst-18</span>, <time datetime="2025-02-19" class="refDate">19 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-mattsson-cfrg-aes-gcm-sst-18">https://datatracker.ietf.org/doc/html/draft-mattsson-cfrg-aes-gcm-sst-18</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC3550">[RFC3550]</dt>
+        <dd>
+<span class="refAuthor">Schulzrinne, H.</span>, <span class="refAuthor">Casner, S.</span>, <span class="refAuthor">Frederick, R.</span>, and <span class="refAuthor">V. Jacobson</span>, <span class="refTitle">"RTP: A Transport Protocol for Real-Time Applications"</span>, <span class="seriesInfo">STD 64</span>, <span class="seriesInfo">RFC 3550</span>, <span class="seriesInfo">DOI 10.17487/RFC3550</span>, <time datetime="2003-07" class="refDate">July 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3550">https://www.rfc-editor.org/rfc/rfc3550</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3711">[RFC3711]</dt>
+        <dd>
+<span class="refAuthor">Baugher, M.</span>, <span class="refAuthor">McGrew, D.</span>, <span class="refAuthor">Naslund, M.</span>, <span class="refAuthor">Carrara, E.</span>, and <span class="refAuthor">K. Norrman</span>, <span class="refTitle">"The Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 3711</span>, <span class="seriesInfo">DOI 10.17487/RFC3711</span>, <time datetime="2004-03" class="refDate">March 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3711">https://www.rfc-editor.org/rfc/rfc3711</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3830">[RFC3830]</dt>
+        <dd>
+<span class="refAuthor">Arkko, J.</span>, <span class="refAuthor">Carrara, E.</span>, <span class="refAuthor">Lindholm, F.</span>, <span class="refAuthor">Naslund, M.</span>, and <span class="refAuthor">K. Norrman</span>, <span class="refTitle">"MIKEY: Multimedia Internet KEYing"</span>, <span class="seriesInfo">RFC 3830</span>, <span class="seriesInfo">DOI 10.17487/RFC3830</span>, <time datetime="2004-08" class="refDate">August 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3830">https://www.rfc-editor.org/rfc/rfc3830</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4568">[RFC4568]</dt>
+        <dd>
+<span class="refAuthor">Andreasen, F.</span>, <span class="refAuthor">Baugher, M.</span>, and <span class="refAuthor">D. Wing</span>, <span class="refTitle">"Session Description Protocol (SDP) Security Descriptions for Media Streams"</span>, <span class="seriesInfo">RFC 4568</span>, <span class="seriesInfo">DOI 10.17487/RFC4568</span>, <time datetime="2006-07" class="refDate">July 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4568">https://www.rfc-editor.org/rfc/rfc4568</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5116">[RFC5116]</dt>
+        <dd>
+<span class="refAuthor">McGrew, D.</span>, <span class="refTitle">"An Interface and Algorithms for Authenticated Encryption"</span>, <span class="seriesInfo">RFC 5116</span>, <span class="seriesInfo">DOI 10.17487/RFC5116</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5116">https://www.rfc-editor.org/rfc/rfc5116</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5234">[RFC5234]</dt>
+        <dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5764">[RFC5764]</dt>
+        <dd>
+<span class="refAuthor">McGrew, D.</span> and <span class="refAuthor">E. Rescorla</span>, <span class="refTitle">"Datagram Transport Layer Security (DTLS) Extension to Establish Keys for the Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 5764</span>, <span class="seriesInfo">DOI 10.17487/RFC5764</span>, <time datetime="2010-05" class="refDate">May 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5764">https://www.rfc-editor.org/rfc/rfc5764</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6188">[RFC6188]</dt>
+        <dd>
+<span class="refAuthor">McGrew, D.</span>, <span class="refTitle">"The Use of AES-192 and AES-256 in Secure RTP"</span>, <span class="seriesInfo">RFC 6188</span>, <span class="seriesInfo">DOI 10.17487/RFC6188</span>, <time datetime="2011-03" class="refDate">March 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6188">https://www.rfc-editor.org/rfc/rfc6188</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6904">[RFC6904]</dt>
+        <dd>
+<span class="refAuthor">Lennox, J.</span>, <span class="refTitle">"Encryption of Header Extensions in the Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 6904</span>, <span class="seriesInfo">DOI 10.17487/RFC6904</span>, <time datetime="2013-04" class="refDate">April 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6904">https://www.rfc-editor.org/rfc/rfc6904</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-14.2">
+        <h3 id="name-informative-references">
+<a href="#section-14.2" class="section-number selfRef">14.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC4303">[RFC4303]</dt>
+        <dd>
+<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Encapsulating Security Payload (ESP)"</span>, <span class="seriesInfo">RFC 4303</span>, <span class="seriesInfo">DOI 10.17487/RFC4303</span>, <time datetime="2005-12" class="refDate">December 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4303">https://www.rfc-editor.org/rfc/rfc4303</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4771">[RFC4771]</dt>
+        <dd>
+<span class="refAuthor">Lehtovirta, V.</span>, <span class="refAuthor">Naslund, M.</span>, and <span class="refAuthor">K. Norrman</span>, <span class="refTitle">"Integrity Transform Carrying Roll-Over Counter for the Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 4771</span>, <span class="seriesInfo">DOI 10.17487/RFC4771</span>, <time datetime="2007-01" class="refDate">January 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4771">https://www.rfc-editor.org/rfc/rfc4771</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6479">[RFC6479]</dt>
+      <dd>
+<span class="refAuthor">Zhang, X.</span> and <span class="refAuthor">T. Tsou</span>, <span class="refTitle">"IPsec Anti-Replay Algorithm without Bit Shifting"</span>, <span class="seriesInfo">RFC 6479</span>, <span class="seriesInfo">DOI 10.17487/RFC6479</span>, <time datetime="2012-01" class="refDate">January 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6479">https://www.rfc-editor.org/rfc/rfc6479</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="acknowledgments">
@@ -1238,7 +2440,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The authors would like to thank the authors of RFC 7714, David McGrew and Kevin Igoe, whose document structure this specification closely follows. The authors also thank the authors of <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span>, Matthew Campagna, Alexander Maximov, and John Preuß Mattsson, for defining the GCM-SST algorithm.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
