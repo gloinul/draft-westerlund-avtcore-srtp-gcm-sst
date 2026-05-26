@@ -78,17 +78,22 @@ Short authentication tags are common in media encryption. 32-bit tags are standa
 This document defines how to use the AES-128-GCM-SST, AES-256-GCM-SST, and Rijndael-GCM-SST AEAD algorithms in SRTP and SRTCP, with authentication tag lengths of 48, 96, and 112 bits. The following cipher suites are defined:
 
 ~~~
-  AEAD_AES_128_GCM_SST_6    AES-128 with a 6-octet (48-bit) tag
-  AEAD_AES_128_GCM_SST_12   AES-128 with a 12-octet (96-bit) tag
-  AEAD_AES_128_GCM_SST_14   AES-128 with a 14-octet (112-bit) tag
-  AEAD_AES_256_GCM_SST_6    AES-256 with a 6-octet (48-bit) tag
-  AEAD_AES_256_GCM_SST_12   AES-256 with a 12-octet (96-bit) tag
-  AEAD_AES_256_GCM_SST_14   AES-256 with a 14-octet (112-bit) tag
+  AEAD_AES_128_GCM_SST_6       AES-128 with a 6-octet (48-bit) tag
+  AEAD_AES_128_GCM_SST_12      AES-128 with a 12-octet (96-bit) tag
+  AEAD_AES_128_GCM_SST_14      AES-128 with a 14-octet (112-bit) tag
+  AEAD_AES_256_GCM_SST_6       AES-256 with a 6-octet (48-bit) tag
+  AEAD_AES_256_GCM_SST_12      AES-256 with a 12-octet (96-bit) tag
+  AEAD_AES_256_GCM_SST_14      AES-256 with a 14-octet (112-bit) tag
+  AEAD_RIJNDAEL_GCM_SST_6      Rijndael-256 with a 6-octet (48-bit) tag
+  AEAD_RIJNDAEL_GCM_SST_12     Rijndael-256 with a 12-octet (96-bit) tag
+  AEAD_RIJNDAEL_GCM_SST_14     Rijndael-256 with a 14-octet (112-bit) tag
 ~~~
 
 The key size is set when the session is initiated and MUST NOT be altered. The tag length is fixed per cipher suite and MUST NOT be altered.
 
 When using cipher suites with 48-bit (6-octet) tags for SRTP, SRTCP uses 96-bit (12-octet) tags. This provides adequate security for the less frequent SRTCP packets while minimizing overhead for the more numerous SRTP packets.
+
+The Rijndael-GCM-SST cipher suites use Rijndael-256 (256-bit key, 256-bit block) in counter mode as the keystream generator. Rijndael-256 uses a 28-octet (224-bit) nonce, which requires a different IV formation than the AES-based cipher suites (see {{rijndael-srtp-iv}} and {{rijndael-srtcp-iv}}).
 
 
 # Conventions and Definitions
@@ -125,7 +130,7 @@ c. A Key Derivation Function (KDF) is applied to the shared master key to form s
 
 d. The details of how the master key is established and shared between participants are outside the scope of this document. Any mechanism for rekeying an existing session is also outside the scope of this document.
 
-e. Each time GCM-SST is invoked to encrypt and authenticate an SRTP or SRTCP packet, a new Initialization Vector (IV) is used. SRTP combines the 4-octet Synchronization Source (SSRC) identifier, the 4-octet Rollover Counter (ROC), and the 2-octet Sequence Number (SEQ) with the 12-octet encryption salt to form a 12-octet IV (see {{srtp-iv}}). SRTCP combines the SSRC and 31-bit SRTCP index with the encryption salt to form a 12-octet IV (see {{srtcp-iv}}).
+e. Each time GCM-SST is invoked to encrypt and authenticate an SRTP or SRTCP packet, a new Initialization Vector (IV) is used. For AES-based cipher suites, SRTP combines the 4-octet Synchronization Source (SSRC) identifier, the 4-octet Rollover Counter (ROC), and the 2-octet Sequence Number (SEQ) with the 12-octet encryption salt to form a 12-octet IV (see {{srtp-iv}}). SRTCP combines the SSRC and 31-bit SRTCP index with the encryption salt to form a 12-octet IV (see {{srtcp-iv}}). For Rijndael-GCM-SST cipher suites, the same packet fields are combined with a 28-octet encryption salt to form a 28-octet IV (see {{rijndael-srtp-iv}} and {{rijndael-srtcp-iv}}).
 
 
 # Generic AEAD Processing
@@ -137,7 +142,7 @@ e. Each time GCM-SST is invoked to encrypt and authenticate an SRTP or SRTCP pac
 ~~~
   Inputs:
     Encryption_key         Octet string, 16 or 32 octets
-    Initialization_Vector  Octet string, 12 octets
+    Initialization_Vector  Octet string, 12 or 28 octets
     Associated_Data        Octet string of variable length
     Plaintext              Octet string of variable length
 
@@ -153,7 +158,7 @@ The ciphertext consists of the encrypted Plaintext followed by the authenticatio
 ~~~
   Inputs:
     Encryption_key         Octet string, 16 or 32 octets
-    Initialization_Vector  Octet string, 12 octets
+    Initialization_Vector  Octet string, 12 or 28 octets
     Associated_Data        Octet string of variable length
     Ciphertext             Octet string of variable length
 
@@ -186,9 +191,30 @@ All incoming packets MUST pass AEAD authentication before any other action takes
             |       Initialization Vector       |<--+
             +--+--+--+--+--+--+--+--+--+--+--+--+
 ~~~
-{: #fig-srtp-iv title="GCM-SST SRTP Initialization Vector Formation"}
+{: #fig-srtp-iv title="GCM-SST SRTP Initialization Vector Formation (AES)"}
 
-The 12-octet IV used by GCM-SST SRTP is formed by first concatenating 2 octets of zeroes, the 4-octet SSRC, the 4-octet rollover counter (ROC), and the 2-octet sequence number (SEQ). The resulting 12-octet value is then XORed with the 12-octet salt to form the IV.
+The 12-octet IV used by AES-GCM-SST SRTP is formed by first concatenating 2 octets of zeroes, the 4-octet SSRC, the 4-octet rollover counter (ROC), and the 2-octet sequence number (SEQ). The resulting 12-octet value is then XORed with the 12-octet salt to form the IV.
+
+## SRTP IV Formation for Rijndael-GCM-SST {#rijndael-srtp-iv}
+
+~~~
+        0                   1                   2
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+       |  0 (18 octets)                  |    SSRC   | ROC | SEQ |---+
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                                      |
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+       |              Encryption Salt (28 octets)                 |->(+)
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                                      |
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+       |           Initialization Vector (28 octets)             |<--+
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+~~~
+{: #fig-rijndael-srtp-iv title="Rijndael-GCM-SST SRTP Initialization Vector Formation"}
+
+The 28-octet IV used by Rijndael-GCM-SST SRTP is formed by first concatenating 18 octets of zeroes, the 4-octet SSRC, the 4-octet rollover counter (ROC), and the 2-octet sequence number (SEQ). The resulting 28-octet value is then XORed with the 28-octet salt to form the IV. The larger salt provides significantly greater security against precomputation and multi-key attacks compared to the AES-based cipher suites.
 
 ## Data Types in SRTP Packets
 
@@ -256,7 +282,7 @@ R:           SRTP authentication tag (NOT RECOMMENDED)           :
 
 ## Handling Header Extensions
 
-When {{RFC6904}} is in use, a separate keystream is generated to encrypt selected RTP header extension elements. For GCM-SST cipher suites using AES-128 keys, this keystream MUST be generated using the AES_128_CM transform. For GCM-SST cipher suites using AES-256 keys, the keystream MUST be generated using the AES_256_CM transform. The originator MUST perform any required header extension encryption before the AEAD algorithm is invoked.
+When {{RFC6904}} is in use, a separate keystream is generated to encrypt selected RTP header extension elements. For GCM-SST cipher suites using AES-128 keys, this keystream MUST be generated using the AES_128_CM transform. For GCM-SST cipher suites using AES-256 keys (including the Rijndael-GCM-SST cipher suites), the keystream MUST be generated using the AES_256_CM transform. The originator MUST perform any required header extension encryption before the AEAD algorithm is invoked.
 
 Both encrypted and unencrypted header extensions are treated by the AEAD algorithm as Associated Data. The AEAD algorithm therefore provides integrity and authentication for header extensions but no additional privacy beyond what RFC 6904 provides.
 
@@ -269,7 +295,7 @@ To prevent IV reuse, the (ROC, SEQ, SSRC) triple MUST never be used twice with t
 
 All SRTCP compound packets MUST be authenticated. SRTCP packet encryption is optional and indicated by a 1-bit Encryption flag located just before the 31-bit SRTCP index.
 
-When using the AEAD_AES_128_GCM_SST_6 or AEAD_AES_256_GCM_SST_6 cipher suites (which use 48-bit tags for SRTP), implementations MUST use 96-bit (12-octet) authentication tags for SRTCP packets. For all other cipher suites, the SRTCP tag length MUST match the SRTP tag length.
+When using the AEAD_AES_128_GCM_SST_6, AEAD_AES_256_GCM_SST_6, or AEAD_RIJNDAEL_GCM_SST_6 cipher suites (which use 48-bit tags for SRTP), implementations MUST use 96-bit (12-octet) authentication tags for SRTCP packets. For all other cipher suites, the SRTCP tag length MUST match the SRTP tag length.
 
 ## SRTCP IV Formation for GCM-SST {#srtcp-iv}
 
@@ -287,9 +313,30 @@ When using the AEAD_AES_128_GCM_SST_6 or AEAD_AES_256_GCM_SST_6 cipher suites (w
             |       Initialization Vector       |<--+
             +--+--+--+--+--+--+--+--+--+--+--+--+
 ~~~
-{: #fig-srtcp-iv title="GCM-SST SRTCP Initialization Vector Formation"}
+{: #fig-srtcp-iv title="GCM-SST SRTCP Initialization Vector Formation (AES)"}
 
-The 12-octet IV used by GCM-SST SRTCP is formed by concatenating 2 octets of zeroes, the 4-octet SSRC, 2 octets of zeroes, a single "0" bit, and the 31-bit SRTCP index. The resulting 12-octet value is then XORed with the 12-octet salt to form the IV.
+The 12-octet IV used by AES-GCM-SST SRTCP is formed by concatenating 2 octets of zeroes, the 4-octet SSRC, 2 octets of zeroes, a single "0" bit, and the 31-bit SRTCP index. The resulting 12-octet value is then XORed with the 12-octet salt to form the IV.
+
+## SRTCP IV Formation for Rijndael-GCM-SST {#rijndael-srtcp-iv}
+
+~~~
+        0                   1                   2
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+       |  0 (18 octets)                  |    SSRC   |00|0+SRTCPi|---+
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                                      |
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+       |              Encryption Salt (28 octets)                 |->(+)
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+                                                                      |
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
+       |           Initialization Vector (28 octets)             |<--+
+       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+~~~
+{: #fig-rijndael-srtcp-iv title="Rijndael-GCM-SST SRTCP Initialization Vector Formation"}
+
+The 28-octet IV used by Rijndael-GCM-SST SRTCP is formed by concatenating 18 octets of zeroes, the 4-octet SSRC, 2 octets of zeroes, a single "0" bit, and the 31-bit SRTCP index. The resulting 28-octet value is then XORed with the 28-octet salt to form the IV.
 
 ## Data Types in Encrypted SRTCP Packets
 
@@ -389,8 +436,8 @@ All AEAD algorithms used with SRTP/SRTCP MUST satisfy the following constraints:
 
 | Parameter | Meaning | Value |
 | A_MAX | Maximum Associated Data length | MUST be at least 12 octets |
-| N_MIN | Minimum nonce (IV) length | MUST be 12 octets |
-| N_MAX | Maximum nonce (IV) length | MUST be 12 octets |
+| N_MIN | Minimum nonce (IV) length | 12 octets (AES) or 28 octets (Rijndael) |
+| N_MAX | Maximum nonce (IV) length | 12 octets (AES) or 28 octets (Rijndael) |
 | P_MAX | Maximum Plaintext length | See {{I-D.mattsson-cfrg-aes-gcm-sst}} |
 | C_MAX | Maximum ciphertext length | P_MAX + tag_length |
 {: title="AEAD Constraints for SRTP/SRTCP"}
@@ -402,7 +449,9 @@ Additional parameters:
 
 # Key Derivation Functions
 
-A Key Derivation Function (KDF) is used to derive all required encryption keys and salts from the shared master key. The AES-128-GCM-SST cipher suites MUST use the AES_128_CM_PRF KDF described in {{RFC3711}}. The AES-256-GCM-SST cipher suites MUST use the AES_256_CM_PRF KDF described in {{RFC6188}}.
+A Key Derivation Function (KDF) is used to derive all required encryption keys and salts from the shared master key. The AES-128-GCM-SST cipher suites MUST use the AES_128_CM_PRF KDF described in {{RFC3711}}. The AES-256-GCM-SST and Rijndael-GCM-SST cipher suites MUST use the AES_256_CM_PRF KDF described in {{RFC6188}}.
+
+For the Rijndael-GCM-SST cipher suites, the KDF MUST derive a 256-bit encryption key and a 224-bit (28-octet) encryption salt. The master salt for Rijndael-GCM-SST is 224 bits.
 
 
 # Summary of GCM-SST Cipher Suites in SRTP/SRTCP
@@ -416,6 +465,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | AEAD_AES_256_GCM_SST_6  | 32 octets | 6 octets  |
 | AEAD_AES_256_GCM_SST_12 | 32 octets | 12 octets |
 | AEAD_AES_256_GCM_SST_14 | 32 octets | 14 octets |
+| AEAD_RIJNDAEL_GCM_SST_6  | 32 octets | 6 octets  |
+| AEAD_RIJNDAEL_GCM_SST_12 | 32 octets | 12 octets |
+| AEAD_RIJNDAEL_GCM_SST_14 | 32 octets | 14 octets |
 {: title="GCM-SST Cipher Suites for SRTP/SRTCP"}
 
 | Parameter | AEAD_AES_128_GCM_SST_6 |
@@ -472,6 +524,33 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | AEAD authentication tag length | 112 bits |
 {: title="AEAD_AES_256_GCM_SST_14 Crypto Suite"}
 
+| Parameter | AEAD_RIJNDAEL_GCM_SST_6 |
+| Master key length | 256 bits |
+| Master salt length | 224 bits |
+| Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
+| Maximum key lifetime (SRTP) | 2^48 packets |
+| Maximum key lifetime (SRTCP) | 2^31 packets |
+| AEAD authentication tag length | 48 bits |
+{: title="AEAD_RIJNDAEL_GCM_SST_6 Crypto Suite"}
+
+| Parameter | AEAD_RIJNDAEL_GCM_SST_12 |
+| Master key length | 256 bits |
+| Master salt length | 224 bits |
+| Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
+| Maximum key lifetime (SRTP) | 2^48 packets |
+| Maximum key lifetime (SRTCP) | 2^31 packets |
+| AEAD authentication tag length | 96 bits |
+{: title="AEAD_RIJNDAEL_GCM_SST_12 Crypto Suite"}
+
+| Parameter | AEAD_RIJNDAEL_GCM_SST_14 |
+| Master key length | 256 bits |
+| Master salt length | 224 bits |
+| Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
+| Maximum key lifetime (SRTP) | 2^48 packets |
+| Maximum key lifetime (SRTCP) | 2^31 packets |
+| AEAD authentication tag length | 112 bits |
+{: title="AEAD_RIJNDAEL_GCM_SST_14 Crypto Suite"}
+
 # Security Considerations
 
 ## Handling of Security-Critical Parameters
@@ -509,6 +588,9 @@ GCM-SST MUST be used with replay protection. The SRTP sequence number and rollov
                           "AEAD_AES_256_GCM_SST_6"  /
                           "AEAD_AES_256_GCM_SST_12" /
                           "AEAD_AES_256_GCM_SST_14" /
+                          "AEAD_RIJNDAEL_GCM_SST_6"  /
+                          "AEAD_RIJNDAEL_GCM_SST_12" /
+                          "AEAD_RIJNDAEL_GCM_SST_14" /
                           srtp-crypto-suite-ext
 ~~~
 
@@ -523,6 +605,9 @@ DTLS-SRTP {{RFC5764}} defines SRTP protection profiles. IANA is requested to reg
   SRTP_AEAD_AES_256_GCM_SST_6   = {0x00, TBD4}
   SRTP_AEAD_AES_256_GCM_SST_12  = {0x00, TBD5}
   SRTP_AEAD_AES_256_GCM_SST_14  = {0x00, TBD6}
+  SRTP_AEAD_RIJNDAEL_GCM_SST_6  = {0x00, TBD8}
+  SRTP_AEAD_RIJNDAEL_GCM_SST_12 = {0x00, TBD9}
+  SRTP_AEAD_RIJNDAEL_GCM_SST_14 = {0x00, TBD10}
 ~~~
 
 The SRTP transform parameters for each protection profile are as follows:
@@ -587,6 +672,36 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_key_length:        N/A
     auth_tag_length:        N/A
     maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_RIJNDAEL_GCM_SST_6
+    cipher:                 RIJNDAEL_256_GCM_SST
+    cipher_key_length:      256 bits
+    cipher_salt_length:     224 bits
+    aead_auth_tag_length:   6 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_RIJNDAEL_GCM_SST_12
+    cipher:                 RIJNDAEL_256_GCM_SST
+    cipher_key_length:      256 bits
+    cipher_salt_length:     224 bits
+    aead_auth_tag_length:   12 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
+
+  SRTP_AEAD_RIJNDAEL_GCM_SST_14
+    cipher:                 RIJNDAEL_256_GCM_SST
+    cipher_key_length:      256 bits
+    cipher_salt_length:     224 bits
+    aead_auth_tag_length:   14 octets
+    auth_function:          NULL
+    auth_key_length:        N/A
+    auth_tag_length:        N/A
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 ~~~
 
 ## MIKEY
@@ -595,6 +710,7 @@ In accordance with {{RFC3830}}, IANA is requested to add the following to the "E
 
 | SRTP Encr. Algorithm | Value | Default Session Encr. Key Length | Default Auth. Tag Length |
 | AES-GCM-SST | TBD7 | 16 octets | variable |
+| RIJNDAEL-256-GCM-SST | TBD11 | 32 octets | variable |
 {: title="MIKEY Encryption Algorithm Registration"}
 
 
@@ -609,6 +725,9 @@ MIKEY specifies the algorithm family separately from the key length and authenti
 | AEAD_AES_256_GCM_SST_6  | AES-GCM-SST | 32 octets | 6 octets  |
 | AEAD_AES_256_GCM_SST_12 | AES-GCM-SST | 32 octets | 12 octets |
 | AEAD_AES_256_GCM_SST_14 | AES-GCM-SST | 32 octets | 14 octets |
+| AEAD_RIJNDAEL_GCM_SST_6  | RIJNDAEL-256-GCM-SST | 32 octets | 6 octets  |
+| AEAD_RIJNDAEL_GCM_SST_12 | RIJNDAEL-256-GCM-SST | 32 octets | 12 octets |
+| AEAD_RIJNDAEL_GCM_SST_14 | RIJNDAEL-256-GCM-SST | 32 octets | 14 octets |
 {: title="Mapping MIKEY Parameters to GCM-SST AEAD Algorithms"}
 
 
