@@ -89,7 +89,7 @@ Table of Contents
      5.4.  Handling Header Extensions
      5.5.  Prevention of SRTP IV Reuse
    6.  GCM-SST Processing for SRTCP
-     6.1.  SRTCP IV Formation for GCM-SST
+     6.1.  SRTCP IV Formation for AES-GCM-SST
      6.2.  SRTCP IV Formation for Rijndael-GCM-SST
      6.3.  Data Types in Encrypted SRTCP Packets
      6.4.  Data Types in Unencrypted SRTCP Packets
@@ -429,7 +429,7 @@ Table of Contents
    for SRTCP packets.  For all other cipher suites, the SRTCP tag length
    MUST match the SRTP tag length.
 
-6.1.  SRTCP IV Formation for GCM-SST
+6.1.  SRTCP IV Formation for AES-GCM-SST
 
                  0  1  2  3  4  5  6  7  8  9 10 11
                +--+--+--+--+--+--+--+--+--+--+--+--+

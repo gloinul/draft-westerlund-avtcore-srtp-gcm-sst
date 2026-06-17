@@ -1203,7 +1203,7 @@ svg {
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-gcm-sst-processing-for-srtc" class="internal xref">GCM-SST Processing for SRTCP</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-srtcp-iv-formation-for-gcm-" class="internal xref">SRTCP IV Formation for GCM-SST</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-srtcp-iv-formation-for-aes-" class="internal xref">SRTCP IV Formation for AES-GCM-SST</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-srtcp-iv-formation-for-rijn" class="internal xref">SRTCP IV Formation for Rijndael-GCM-SST</a></p>
@@ -1616,8 +1616,8 @@ R:           SRTP authentication tag (NOT RECOMMENDED)           :
 <p id="section-6-2">When using the AEAD_AES_128_GCM_SST_6, AEAD_AES_256_GCM_SST_6, or AEAD_RIJNDAEL_GCM_SST_6 cipher suites (which use 48-bit tags for SRTP), implementations <span class="bcp14">MUST</span> use 96-bit (12-octet) authentication tags for SRTCP packets. For all other cipher suites, the SRTCP tag length <span class="bcp14">MUST</span> match the SRTP tag length.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <div id="srtcp-iv">
 <section id="section-6.1">
-        <h3 id="name-srtcp-iv-formation-for-gcm-">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-srtcp-iv-formation-for-gcm-" class="section-name selfRef">SRTCP IV Formation for GCM-SST</a>
+        <h3 id="name-srtcp-iv-formation-for-aes-">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-srtcp-iv-formation-for-aes-" class="section-name selfRef">SRTCP IV Formation for AES-GCM-SST</a>
         </h3>
 <span id="name-gcm-sst-srtcp-initializatio"></span><div id="fig-srtcp-iv">
 <figure id="figure-5">
