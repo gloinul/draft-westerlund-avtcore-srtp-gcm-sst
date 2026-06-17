@@ -295,7 +295,7 @@ All SRTCP compound packets MUST be authenticated. SRTCP packet encryption is opt
 
 When using the AEAD_AES_128_GCM_SST_6, AEAD_AES_256_GCM_SST_6, or AEAD_RIJNDAEL_GCM_SST_6 cipher suites (which use 48-bit tags for SRTP), implementations MUST use 96-bit (12-octet) authentication tags for SRTCP packets. For all other cipher suites, the SRTCP tag length MUST match the SRTP tag length.
 
-## SRTCP IV Formation for GCM-SST {#srtcp-iv}
+## SRTCP IV Formation for AES-GCM-SST {#srtcp-iv}
 
 ~~~
               0  1  2  3  4  5  6  7  8  9 10 11
