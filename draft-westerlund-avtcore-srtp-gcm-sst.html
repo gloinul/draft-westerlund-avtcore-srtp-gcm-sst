@@ -1046,11 +1046,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">GCM-SST for SRTP</td>
-<td class="right">May 2026</td>
+<td class="right">June 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Westerlund &amp; Preuß Mattsson</td>
-<td class="center">Expires 27 November 2026</td>
+<td class="center">Expires 19 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg {
 <dd class="internet-draft">draft-westerlund-avtcore-srtp-gcm-sst-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-26" class="published">26 May 2026</time>
+<time datetime="2026-06-17" class="published">17 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-27">27 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-19">19 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1122,7 +1122,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1314,9 +1314,8 @@ svg {
   AEAD_RIJNDAEL_GCM_SST_14     Rijndael-256 with a 14-octet (112-bit) tag
 </pre><a href="#section-1-6" class="pilcrow">¶</a>
 </div>
-<p id="section-1-7">The key size is set when the session is initiated and <span class="bcp14">MUST NOT</span> be altered. The tag length is fixed per cipher suite and <span class="bcp14">MUST NOT</span> be altered.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">When using cipher suites with 48-bit (6-octet) tags for SRTP, SRTCP uses 96-bit (12-octet) tags. This provides adequate security for the less frequent SRTCP packets while minimizing overhead for the more numerous SRTP packets.<a href="#section-1-8" class="pilcrow">¶</a></p>
-<p id="section-1-9">The Rijndael-GCM-SST cipher suites use Rijndael-256 (256-bit key, 256-bit block) in counter mode as the keystream generator. Rijndael-256 uses a 28-octet (224-bit) nonce, which requires a different IV formation than the AES-based cipher suites (see <a href="#rijndael-srtp-iv" class="auto internal xref">Section 5.2</a> and <a href="#rijndael-srtcp-iv" class="auto internal xref">Section 6.2</a>).<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-7">When using cipher suites with 48-bit (6-octet) tags for SRTP, SRTCP uses 96-bit (12-octet) tags. This provides adequate security for the less frequent SRTCP packets while minimizing overhead for the more numerous SRTP packets.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">The Rijndael-GCM-SST cipher suites use Rijndael-256 (256-bit key, 256-bit block) in counter mode as the keystream generator. Rijndael-256 uses a 28-octet (224-bit) nonce, which requires a different IV formation than the AES-based cipher suites (see <a href="#rijndael-srtp-iv" class="auto internal xref">Section 5.2</a> and <a href="#rijndael-srtcp-iv" class="auto internal xref">Section 6.2</a>).<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">

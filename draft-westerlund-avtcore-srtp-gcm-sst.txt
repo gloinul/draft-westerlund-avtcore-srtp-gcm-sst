@@ -5,7 +5,7 @@
 Audio/Video Transport Core Maintenance                     M. Westerlund
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                                Ericsson
-Expires: 27 November 2026                                    26 May 2026
+Expires: 19 December 2026                                   17 June 2026
 
 
    GCM-SST Authenticated Encryption in the Secure Real-time Transport
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 November 2026.
+   This Internet-Draft will expire on 19 December 2026.
 
 Copyright Notice
 
@@ -162,10 +162,6 @@ Table of Contents
   AEAD_RIJNDAEL_GCM_SST_6      Rijndael-256 with a 6-octet (48-bit) tag
   AEAD_RIJNDAEL_GCM_SST_12     Rijndael-256 with a 12-octet (96-bit) tag
   AEAD_RIJNDAEL_GCM_SST_14     Rijndael-256 with a 14-octet (112-bit) tag
-
-   The key size is set when the session is initiated and MUST NOT be
-   altered.  The tag length is fixed per cipher suite and MUST NOT be
-   altered.
 
    When using cipher suites with 48-bit (6-octet) tags for SRTP, SRTCP
    uses 96-bit (12-octet) tags.  This provides adequate security for the
