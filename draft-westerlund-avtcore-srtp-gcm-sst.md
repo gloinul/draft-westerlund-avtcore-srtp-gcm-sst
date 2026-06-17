@@ -576,23 +576,6 @@ GCM-SST MUST be used with replay protection. The SRTP sequence number and rollov
 
 # IANA Considerations
 
-## SDES
-
-"Session Description Protocol (SDP) Security Descriptions for Media Streams" {{RFC4568}} defines SRTP crypto suites. IANA is requested to register the following crypto suites in the "SRTP Crypto Suite Registrations" subregistry:
-
-~~~
-  srtp-crypto-suite-ext = "AEAD_AES_128_GCM_SST_6"  /
-                          "AEAD_AES_128_GCM_SST_12" /
-                          "AEAD_AES_128_GCM_SST_14" /
-                          "AEAD_AES_256_GCM_SST_6"  /
-                          "AEAD_AES_256_GCM_SST_12" /
-                          "AEAD_AES_256_GCM_SST_14" /
-                          "AEAD_RIJNDAEL_GCM_SST_6"  /
-                          "AEAD_RIJNDAEL_GCM_SST_12" /
-                          "AEAD_RIJNDAEL_GCM_SST_14" /
-                          srtp-crypto-suite-ext
-~~~
-
 ## DTLS-SRTP
 
 DTLS-SRTP {{RFC5764}} defines SRTP protection profiles. IANA is requested to register the following SRTP protection profiles:
