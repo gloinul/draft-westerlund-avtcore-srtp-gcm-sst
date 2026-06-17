@@ -1257,13 +1257,10 @@ svg {
             <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-sdes" class="internal xref">SDES</a></p>
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-dtls-srtp" class="internal xref">DTLS-SRTP</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
-                <p id="section-toc.1-1.12.2.2.1"><a href="#section-12.2" class="auto internal xref">12.2</a>.  <a href="#name-dtls-srtp" class="internal xref">DTLS-SRTP</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
-                <p id="section-toc.1-1.12.2.3.1"><a href="#section-12.3" class="auto internal xref">12.3</a>.  <a href="#name-mikey" class="internal xref">MIKEY</a></p>
+                <p id="section-toc.1-1.12.2.2.1"><a href="#section-12.2" class="auto internal xref">12.2</a>.  <a href="#name-mikey" class="internal xref">MIKEY</a></p>
 </li>
             </ul>
 </li>
@@ -1452,11 +1449,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
             +--+--+--+--+--+--+--+--+--+--+--+--+
             |00|00|    SSRC   |     ROC   | SEQ |---+
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                     |
+                                                    |
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
             |         Encryption Salt           |-&gt;(+)
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                     |
+                                                    |
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
             |       Initialization Vector       |&lt;--+
             +--+--+--+--+--+--+--+--+--+--+--+--+
@@ -1478,19 +1475,19 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <figure id="figure-2">
           <div class="alignLeft art-text artwork" id="section-5.2-1.1">
 <pre>
-            0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
-            0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |         0 (18 octets)             |  SSRC | ROC   |SEQ|---+
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-                                                                       |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-           |             Encryption Salt (28 octets)               |-&gt;(+)
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-                                                                       |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-           |          Initialization Vector (28 octets)            |&lt;--+
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ |         0 (18 octets)             |  SSRC | ROC   |SEQ|---+
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+ |             Encryption Salt (28 octets)               |-&gt;(+)
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+ |          Initialization Vector (28 octets)            |&lt;--+
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -1627,11 +1624,11 @@ R:           SRTP authentication tag (NOT RECOMMENDED)           :
             +--+--+--+--+--+--+--+--+--+--+--+--+
             |00|00|    SSRC   |00|00|0+SRTCP Idx|---+
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                     |
+                                                    |
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
             |         Encryption Salt           |-&gt;(+)
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                     |
+                                                    |
             +--+--+--+--+--+--+--+--+--+--+--+--+   |
             |       Initialization Vector       |&lt;--+
             +--+--+--+--+--+--+--+--+--+--+--+--+
@@ -1653,19 +1650,20 @@ R:           SRTP authentication tag (NOT RECOMMENDED)           :
 <figure id="figure-6">
           <div class="alignLeft art-text artwork" id="section-6.2-1.1">
 <pre>
-        0                   1                   2
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-       |  0 (18 octets)                  |    SSRC   |00|0+SRTCPi|---+
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                                      |
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-       |              Encryption Salt (28 octets)                 |-&gt;(+)
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                                      |
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-       |           Initialization Vector (28 octets)             |&lt;--+
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ |         0 (18 octets)             |  SSRC |0 0|0+RTCPi|---+
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+ |             Encryption Salt (28 octets)               |-&gt;(+)
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                             |
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+ |          Initialization Vector (28 octets)            |&lt;--+
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 </pre>
 </div>
 <figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
@@ -2357,35 +2355,13 @@ R:              authentication tag (NOT RECOMMENDED)             :
       <h2 id="name-iana-considerations">
 <a href="#section-12" class="section-number selfRef">12. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<div id="sdes">
-<section id="section-12.1">
-        <h3 id="name-sdes">
-<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-sdes" class="section-name selfRef">SDES</a>
-        </h3>
-<p id="section-12.1-1">"Session Description Protocol (SDP) Security Descriptions for Media Streams" <span>[<a href="#RFC4568" class="cite xref">RFC4568</a>]</span> defines SRTP crypto suites. IANA is requested to register the following crypto suites in the "SRTP Crypto Suite Registrations" subregistry:<a href="#section-12.1-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-12.1-2">
-<pre>
-  srtp-crypto-suite-ext = "AEAD_AES_128_GCM_SST_6"  /
-                          "AEAD_AES_128_GCM_SST_12" /
-                          "AEAD_AES_128_GCM_SST_14" /
-                          "AEAD_AES_256_GCM_SST_6"  /
-                          "AEAD_AES_256_GCM_SST_12" /
-                          "AEAD_AES_256_GCM_SST_14" /
-                          "AEAD_RIJNDAEL_GCM_SST_6"  /
-                          "AEAD_RIJNDAEL_GCM_SST_12" /
-                          "AEAD_RIJNDAEL_GCM_SST_14" /
-                          srtp-crypto-suite-ext
-</pre><a href="#section-12.1-2" class="pilcrow">¶</a>
-</div>
-</section>
-</div>
 <div id="dtls-srtp">
-<section id="section-12.2">
+<section id="section-12.1">
         <h3 id="name-dtls-srtp">
-<a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-dtls-srtp" class="section-name selfRef">DTLS-SRTP</a>
+<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-dtls-srtp" class="section-name selfRef">DTLS-SRTP</a>
         </h3>
-<p id="section-12.2-1">DTLS-SRTP <span>[<a href="#RFC5764" class="cite xref">RFC5764</a>]</span> defines SRTP protection profiles. IANA is requested to register the following SRTP protection profiles:<a href="#section-12.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-12.2-2">
+<p id="section-12.1-1">DTLS-SRTP <span>[<a href="#RFC5764" class="cite xref">RFC5764</a>]</span> defines SRTP protection profiles. IANA is requested to register the following SRTP protection profiles:<a href="#section-12.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.1-2">
 <pre>
   SRTP_AEAD_AES_128_GCM_SST_6   = {0x00, TBD1}
   SRTP_AEAD_AES_128_GCM_SST_12  = {0x00, TBD2}
@@ -2396,10 +2372,10 @@ R:              authentication tag (NOT RECOMMENDED)             :
   SRTP_AEAD_RIJNDAEL_GCM_SST_6  = {0x00, TBD8}
   SRTP_AEAD_RIJNDAEL_GCM_SST_12 = {0x00, TBD9}
   SRTP_AEAD_RIJNDAEL_GCM_SST_14 = {0x00, TBD10}
-</pre><a href="#section-12.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-12.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-12.2-3">The SRTP transform parameters for each protection profile are as follows:<a href="#section-12.2-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-12.2-4">
+<p id="section-12.1-3">The SRTP transform parameters for each protection profile are as follows:<a href="#section-12.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.1-4">
 <pre>
   SRTP_AEAD_AES_128_GCM_SST_6
     cipher:                 AES_128_GCM_SST
@@ -2490,16 +2466,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
     auth_key_length:        N/A
     auth_tag_length:        N/A
     maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
-</pre><a href="#section-12.2-4" class="pilcrow">¶</a>
+</pre><a href="#section-12.1-4" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="mikey">
-<section id="section-12.3">
+<section id="section-12.2">
         <h3 id="name-mikey">
-<a href="#section-12.3" class="section-number selfRef">12.3. </a><a href="#name-mikey" class="section-name selfRef">MIKEY</a>
+<a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-mikey" class="section-name selfRef">MIKEY</a>
         </h3>
-<p id="section-12.3-1">In accordance with <span>[<a href="#RFC3830" class="cite xref">RFC3830</a>]</span>, IANA is requested to add the following to the "Encryption algorithm (Value 0)" subregistry:<a href="#section-12.3-1" class="pilcrow">¶</a></p>
+<p id="section-12.2-1">In accordance with <span>[<a href="#RFC3830" class="cite xref">RFC3830</a>]</span>, IANA is requested to add the following to the "Encryption algorithm (Value 0)" subregistry:<a href="#section-12.2-1" class="pilcrow">¶</a></p>
 <span id="name-mikey-encryption-algorithm-"></span><table class="center" id="table-12">
           <caption>
 <a href="#table-12" class="selfRef">Table 12</a>:

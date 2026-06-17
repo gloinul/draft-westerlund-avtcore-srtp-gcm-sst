@@ -105,9 +105,8 @@ Table of Contents
      11.2.  Size of the Authentication Tag
      11.3.  Replay Protection
    12. IANA Considerations
-     12.1.  SDES
-     12.2.  DTLS-SRTP
-     12.3.  MIKEY
+     12.1.  DTLS-SRTP
+     12.2.  MIKEY
    13. Parameters for Use with MIKEY
    14. References
      14.1.  Normative References
@@ -282,11 +281,11 @@ Table of Contents
                +--+--+--+--+--+--+--+--+--+--+--+--+
                |00|00|    SSRC   |     ROC   | SEQ |---+
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                        |
+                                                       |
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
                |         Encryption Salt           |->(+)
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                        |
+                                                       |
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
                |       Initialization Vector       |<--+
                +--+--+--+--+--+--+--+--+--+--+--+--+
@@ -301,21 +300,21 @@ Table of Contents
 
 5.2.  SRTP IV Formation for Rijndael-GCM-SST
 
-            0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
-            0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |         0 (18 octets)             |  SSRC | ROC   |SEQ|---+
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-                                                                       |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-           |             Encryption Salt (28 octets)               |->(+)
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-                                                                       |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
-           |          Initialization Vector (28 octets)            |<--+
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |         0 (18 octets)             |  SSRC | ROC   |SEQ|---+
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                                |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+    |             Encryption Salt (28 octets)               |->(+)
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                                |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+    |          Initialization Vector (28 octets)            |<--+
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-   Figure 2: Rijndael-GCM-SST SRTP Initialization Vector Formation
+      Figure 2: Rijndael-GCM-SST SRTP Initialization Vector Formation
 
    The 28-octet IV used by Rijndael-GCM-SST SRTP is formed by first
    concatenating 18 octets of zeroes, the 4-octet SSRC, the 4-octet
@@ -435,11 +434,11 @@ Table of Contents
                +--+--+--+--+--+--+--+--+--+--+--+--+
                |00|00|    SSRC   |00|00|0+SRTCP Idx|---+
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                        |
+                                                       |
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
                |         Encryption Salt           |->(+)
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                        |
+                                                       |
                +--+--+--+--+--+--+--+--+--+--+--+--+   |
                |       Initialization Vector       |<--+
                +--+--+--+--+--+--+--+--+--+--+--+--+
@@ -453,21 +452,21 @@ Table of Contents
 
 6.2.  SRTCP IV Formation for Rijndael-GCM-SST
 
-        0                   1                   2
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-       |  0 (18 octets)                  |    SSRC   |00|0+SRTCPi|---+
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                                      |
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-       |              Encryption Salt (28 octets)                 |->(+)
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-                                                                      |
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+   |
-       |           Initialization Vector (28 octets)             |<--+
-       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+     0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |         0 (18 octets)             |  SSRC |0 0|0+RTCPi|---+
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                                |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+    |             Encryption Salt (28 octets)               |->(+)
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+                                                                |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   |
+    |          Initialization Vector (28 octets)            |<--+
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-   Figure 6: Rijndael-GCM-SST SRTCP Initialization Vector Formation
+      Figure 6: Rijndael-GCM-SST SRTCP Initialization Vector Formation
 
    The 28-octet IV used by Rijndael-GCM-SST SRTCP is formed by
    concatenating 18 octets of zeroes, the 4-octet SSRC, 2 octets of
@@ -849,25 +848,7 @@ Table of Contents
 
 12.  IANA Considerations
 
-12.1.  SDES
-
-   "Session Description Protocol (SDP) Security Descriptions for Media
-   Streams" [RFC4568] defines SRTP crypto suites.  IANA is requested to
-   register the following crypto suites in the "SRTP Crypto Suite
-   Registrations" subregistry:
-
-     srtp-crypto-suite-ext = "AEAD_AES_128_GCM_SST_6"  /
-                             "AEAD_AES_128_GCM_SST_12" /
-                             "AEAD_AES_128_GCM_SST_14" /
-                             "AEAD_AES_256_GCM_SST_6"  /
-                             "AEAD_AES_256_GCM_SST_12" /
-                             "AEAD_AES_256_GCM_SST_14" /
-                             "AEAD_RIJNDAEL_GCM_SST_6"  /
-                             "AEAD_RIJNDAEL_GCM_SST_12" /
-                             "AEAD_RIJNDAEL_GCM_SST_14" /
-                             srtp-crypto-suite-ext
-
-12.2.  DTLS-SRTP
+12.1.  DTLS-SRTP
 
    DTLS-SRTP [RFC5764] defines SRTP protection profiles.  IANA is
    requested to register the following SRTP protection profiles:
@@ -975,7 +956,7 @@ Table of Contents
     auth_tag_length:        N/A
     maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
-12.3.  MIKEY
+12.2.  MIKEY
 
    In accordance with [RFC3830], IANA is requested to add the following
    to the "Encryption algorithm (Value 0)" subregistry:
