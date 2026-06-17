@@ -107,10 +107,10 @@ Table of Contents
    12. IANA Considerations
      12.1.  DTLS-SRTP
      12.2.  MIKEY
-   13. Parameters for Use with MIKEY
-   14. References
-     14.1.  Normative References
-     14.2.  Informative References
+     12.3.  Parameters for Use with MIKEY
+   13. References
+     13.1.  Normative References
+     13.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
@@ -972,7 +972,7 @@ Table of Contents
 
              Table 12: MIKEY Encryption Algorithm Registration
 
-13.  Parameters for Use with MIKEY
+12.3.  Parameters for Use with MIKEY
 
    MIKEY specifies the algorithm family separately from the key length
    and authentication tag length.
@@ -1013,9 +1013,9 @@ Table of Contents
 
        Table 13: Mapping MIKEY Parameters to GCM-SST AEAD Algorithms
 
-14.  References
+13.  References
 
-14.1.  Normative References
+13.1.  Normative References
 
    [I-D.mattsson-cfrg-aes-gcm-sst]
               Campagna, M., Maximov, A., and J. P. Mattsson, "Galois
@@ -1078,7 +1078,7 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-14.2.  Informative References
+13.2.  Informative References
 
    [RFC4303]  Kent, S., "IP Encapsulating Security Payload (ESP)",
               RFC 4303, DOI 10.17487/RFC4303, December 2005,
