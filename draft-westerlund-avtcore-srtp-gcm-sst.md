@@ -696,7 +696,7 @@ In accordance with {{RFC3830}}, IANA is requested to add the following to the "E
 {: title="MIKEY Encryption Algorithm Registration"}
 
 
-# Parameters for Use with MIKEY
+## Parameters for Use with MIKEY
 
 MIKEY specifies the algorithm family separately from the key length and authentication tag length.
 
