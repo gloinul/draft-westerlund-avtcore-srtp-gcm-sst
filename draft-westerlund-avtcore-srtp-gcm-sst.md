@@ -89,8 +89,6 @@ This document defines how to use the AES-128-GCM-SST, AES-256-GCM-SST, and Rijnd
   AEAD_RIJNDAEL_GCM_SST_14     Rijndael-256 with a 14-octet (112-bit) tag
 ~~~
 
-The key size is set when the session is initiated and MUST NOT be altered. The tag length is fixed per cipher suite and MUST NOT be altered.
-
 When using cipher suites with 48-bit (6-octet) tags for SRTP, SRTCP uses 96-bit (12-octet) tags. This provides adequate security for the less frequent SRTCP packets while minimizing overhead for the more numerous SRTP packets.
 
 The Rijndael-GCM-SST cipher suites use Rijndael-256 (256-bit key, 256-bit block) in counter mode as the keystream generator. Rijndael-256 uses a 28-octet (224-bit) nonce, which requires a different IV formation than the AES-based cipher suites (see {{rijndael-srtp-iv}} and {{rijndael-srtcp-iv}}).
