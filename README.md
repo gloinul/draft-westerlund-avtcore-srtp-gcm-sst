@@ -1,8 +1,8 @@
 <!-- regenerate: on (set to off if you edit this file) -->
 
-# GCM Short Secure Tags (SST) for Secure RTP
+# GCM Strong Secure Tags (SST) for Secure RTP
 
-This is the working area for the individual Internet-Draft, "GCM Short Secure Tags (SST) for Secure RTP".
+This is the working area for the individual Internet-Draft, "GCM Strong Secure Tags (SST) for Secure RTP".
 
 * [Editor's Copy](https://gloinul.github.io/draft-westerlund-avtcore-srtp-gcm-sst/#go.draft-westerlund-avtcore-srtp-gcm-sst.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-westerlund-avtcore-srtp-gcm-sst)
