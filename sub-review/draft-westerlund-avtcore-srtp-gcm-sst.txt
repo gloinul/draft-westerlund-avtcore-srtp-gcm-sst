@@ -199,6 +199,9 @@ Table of Contents
 
    Plaintext:  Data that is both encrypted and authenticated.
 
+   Ciphertext:  The output of the AEAD encryption function, consisting
+      of the encrypted Plaintext followed by the authentication tag.
+
    Raw Data:  Data that is neither encrypted nor authenticated.
 
 3.  Overview of the SRTP/SRTCP AEAD Security Architecture
