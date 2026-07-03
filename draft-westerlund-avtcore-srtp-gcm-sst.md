@@ -587,9 +587,9 @@ DTLS-SRTP {{RFC5764}} defines SRTP protection profiles. IANA is requested to reg
   SRTP_AEAD_AES_256_GCM_SST_6   = {0x00, TBD4}
   SRTP_AEAD_AES_256_GCM_SST_12  = {0x00, TBD5}
   SRTP_AEAD_AES_256_GCM_SST_14  = {0x00, TBD6}
-  SRTP_AEAD_RIJNDAEL_GCM_SST_6  = {0x00, TBD8}
-  SRTP_AEAD_RIJNDAEL_GCM_SST_12 = {0x00, TBD9}
-  SRTP_AEAD_RIJNDAEL_GCM_SST_14 = {0x00, TBD10}
+  SRTP_AEAD_RIJNDAEL_GCM_SST_6  = {0x00, TBD7}
+  SRTP_AEAD_RIJNDAEL_GCM_SST_12 = {0x00, TBD8}
+  SRTP_AEAD_RIJNDAEL_GCM_SST_14 = {0x00, TBD9}
 ~~~
 
 The SRTP transform parameters for each protection profile are as follows:
@@ -691,7 +691,7 @@ The SRTP transform parameters for each protection profile are as follows:
 In accordance with {{RFC3830}}, IANA is requested to add the following to the "Encryption algorithm (Value 0)" subregistry:
 
 | SRTP Encr. Algorithm | Value | Default Session Encr. Key Length | Default Auth. Tag Length |
-| AES-GCM-SST | TBD7 | 16 octets | variable |
+| AES-GCM-SST | TBD10 | 16 octets | variable |
 | RIJNDAEL-256-GCM-SST | TBD11 | 32 octets | variable |
 {: title="MIKEY Encryption Algorithm Registration"}
 
