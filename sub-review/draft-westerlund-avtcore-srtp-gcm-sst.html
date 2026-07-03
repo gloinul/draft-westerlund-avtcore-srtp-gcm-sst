@@ -1252,6 +1252,12 @@ svg {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
                 <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-replay-protection" class="internal xref">Replay Protection</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="auto internal xref">11.4</a>.  <a href="#name-rekeying" class="internal xref">Rekeying</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="auto internal xref">11.5</a>.  <a href="#name-multicast-and-broadcast" class="internal xref">Multicast and Broadcast</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
@@ -1426,7 +1432,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-handling-of-aead-authentica">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-handling-of-aead-authentica" class="section-name selfRef">Handling of AEAD Authentication</a>
         </h3>
-<p id="section-4.2-1">All incoming packets <span class="bcp14">MUST</span> pass AEAD authentication before any other action takes place. Plaintext and Associated Data <span class="bcp14">MUST NOT</span> be released until the AEAD authentication tag has been validated. Should the AEAD tag prove to be invalid, the packet <span class="bcp14">MUST</span> be discarded.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">All incoming packets <span class="bcp14">MUST</span> pass AEAD authentication before any other action takes place. Plaintext and Associated Data <span class="bcp14">MUST NOT</span> be released until the AEAD authentication tag has been validated. Should the AEAD authentication tag prove to be invalid, the packet <span class="bcp14">MUST</span> be discarded.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1857,7 +1863,7 @@ R:              authentication tag (NOT RECOMMENDED)             :
           <tr>
             <td class="text-left" rowspan="1" colspan="1">P_MAX</td>
             <td class="text-left" rowspan="1" colspan="1">Maximum Plaintext length</td>
-            <td class="text-left" rowspan="1" colspan="1">2^15 bytes (AES) or 2^16 bytes (Rijndael)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^15 octets (AES) or 2^16 octets (Rijndael)</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">C_MAX</td>
@@ -1875,7 +1881,7 @@ R:              authentication tag (NOT RECOMMENDED)             :
           <p id="section-8-4.2.1">V_MAX (maximum number of decryption invocations per key): For AES-GCM-SST cipher suites, V_MAX is 2^54. For Rijndael-GCM-SST cipher suites, V_MAX is 2^118.<a href="#section-8-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-8-5">For AES-GCM-SST, <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span> requires that protocols <span class="bcp14">MUST</span> enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With Q_MAX of 2^48 and P_MAX of 2^15 bytes, the product Q_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX <span class="bcp14">MAY</span> be increased provided that Q_MAX is reduced accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey <span class="bcp14">MUST</span> be performed before Q_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 bytes with Q_MAX of 2^48.<a href="#section-8-5" class="pilcrow">¶</a></p>
+<p id="section-8-5">For AES-GCM-SST, <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span> requires that protocols <span class="bcp14">MUST</span> enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With Q_MAX of 2^48 and P_MAX of 2^15 octets, the product Q_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX <span class="bcp14">MAY</span> be increased provided that Q_MAX is reduced accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey <span class="bcp14">MUST</span> be performed before Q_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 octets with Q_MAX of 2^48.<a href="#section-8-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-derivation-functions">
@@ -2377,7 +2383,7 @@ R:              authentication tag (NOT RECOMMENDED)             :
         <h3 id="name-size-of-the-authentication-">
 <a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-size-of-the-authentication-" class="section-name selfRef">Size of the Authentication Tag</a>
         </h3>
-<p id="section-11.2-1">The GCM-SST tag_length <span class="bcp14">SHOULD NOT</span> be smaller than 4 bytes. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations <span class="bcp14">MUST</span> use the tag length associated with the negotiated cipher suite and <span class="bcp14">MUST NOT</span> truncate or extend the tag.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">The GCM-SST tag_length <span class="bcp14">SHOULD NOT</span> be smaller than 4 octets. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations <span class="bcp14">MUST</span> use the tag length associated with the negotiated cipher suite and <span class="bcp14">MUST NOT</span> truncate or extend the tag.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="replay-protection">
@@ -2386,6 +2392,22 @@ R:              authentication tag (NOT RECOMMENDED)             :
 <a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-replay-protection" class="section-name selfRef">Replay Protection</a>
         </h3>
 <p id="section-11.3-1">GCM-SST <span class="bcp14">MUST</span> be used with replay protection. The SRTP sequence number and rollover counter, or the SRTCP index, provide the basis for replay protection. For examples of replay protection mechanisms, see <span>[<a href="#RFC4303" class="cite xref">RFC4303</a>]</span> and <span>[<a href="#RFC6479" class="cite xref">RFC6479</a>]</span>.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="rekeying">
+<section id="section-11.4">
+        <h3 id="name-rekeying">
+<a href="#section-11.4" class="section-number selfRef">11.4. </a><a href="#name-rekeying" class="section-name selfRef">Rekeying</a>
+        </h3>
+<p id="section-11.4-1">Implementations <span class="bcp14">SHOULD</span> rekey well before reaching Q_MAX. To minimize the impact of key compromise, rekeying via ephemeral key exchange providing forward secrecy <span class="bcp14">SHOULD</span> occur after at most 1 hour or 2^30 to 2^37 octets of data, whichever comes first.<a href="#section-11.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="multicast-and-broadcast">
+<section id="section-11.5">
+        <h3 id="name-multicast-and-broadcast">
+<a href="#section-11.5" class="section-number selfRef">11.5. </a><a href="#name-multicast-and-broadcast" class="section-name selfRef">Multicast and Broadcast</a>
+        </h3>
+<p id="section-11.5-1">Although GCM-SST offers stronger security than AES-GCM for short tags, it is not ideal in multicast or broadcast settings. A single successful forgery against one recipient can be replayed against all other recipients sharing the same key. See Section 5.6 of <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span> for further details.<a href="#section-11.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
