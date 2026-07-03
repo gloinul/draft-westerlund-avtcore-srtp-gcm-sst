@@ -167,7 +167,7 @@ The ciphertext consists of the encrypted Plaintext followed by the authenticatio
 
 ## Handling of AEAD Authentication
 
-All incoming packets MUST pass AEAD authentication before any other action takes place. Plaintext and Associated Data MUST NOT be released until the AEAD authentication tag has been validated. Should the AEAD tag prove to be invalid, the packet MUST be discarded.
+All incoming packets MUST pass AEAD authentication before any other action takes place. Plaintext and Associated Data MUST NOT be released until the AEAD authentication tag has been validated. Should the AEAD authentication tag prove to be invalid, the packet MUST be discarded.
 
 
 # GCM-SST Processing for SRTP
@@ -437,7 +437,7 @@ All AEAD algorithms used with SRTP/SRTCP MUST satisfy the following constraints:
 | A_MAX | Maximum Associated Data length | MUST be at least 12 octets |
 | N_MIN | Minimum nonce (IV) length | 12 octets (AES) or 28 octets (Rijndael) |
 | N_MAX | Maximum nonce (IV) length | 12 octets (AES) or 28 octets (Rijndael) |
-| P_MAX | Maximum Plaintext length | 2^15 bytes (AES) or 2^16 bytes (Rijndael) |
+| P_MAX | Maximum Plaintext length | 2^15 octets (AES) or 2^16 octets (Rijndael) |
 | C_MAX | Maximum ciphertext length | P_MAX + tag_length |
 {: title="AEAD Constraints for SRTP/SRTCP"}
 
@@ -447,7 +447,7 @@ Additional parameters:
 
 - V_MAX (maximum number of decryption invocations per key): For AES-GCM-SST cipher suites, V_MAX is 2^54. For Rijndael-GCM-SST cipher suites, V_MAX is 2^118.
 
-For AES-GCM-SST, {{I-D.mattsson-cfrg-aes-gcm-sst}} requires that protocols MUST enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With Q_MAX of 2^48 and P_MAX of 2^15 bytes, the product Q_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX MAY be increased provided that Q_MAX is reduced accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey MUST be performed before Q_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 bytes with Q_MAX of 2^48.
+For AES-GCM-SST, {{I-D.mattsson-cfrg-aes-gcm-sst}} requires that protocols MUST enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With Q_MAX of 2^48 and P_MAX of 2^15 octets, the product Q_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX MAY be increased provided that Q_MAX is reduced accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey MUST be performed before Q_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 octets with Q_MAX of 2^48.
 
 
 # Key Derivation Functions
@@ -581,7 +581,7 @@ The following security-critical parameters must be handled properly:
 
 ## Size of the Authentication Tag
 
-The GCM-SST tag_length SHOULD NOT be smaller than 4 bytes. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations MUST use the tag length associated with the negotiated cipher suite and MUST NOT truncate or extend the tag.
+The GCM-SST tag_length SHOULD NOT be smaller than 4 octets. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations MUST use the tag length associated with the negotiated cipher suite and MUST NOT truncate or extend the tag.
 
 ## Replay Protection
 
@@ -589,7 +589,7 @@ GCM-SST MUST be used with replay protection. The SRTP sequence number and rollov
 
 ## Rekeying
 
-Implementations SHOULD rekey well before reaching Q_MAX. To minimize the impact of key compromise, rekeying via ephemeral key exchange providing forward secrecy SHOULD occur after at most 1 hour or 2^30 to 2^37 bytes of data, whichever comes first.
+Implementations SHOULD rekey well before reaching Q_MAX. To minimize the impact of key compromise, rekeying via ephemeral key exchange providing forward secrecy SHOULD occur after at most 1 hour or 2^30 to 2^37 octets of data, whichever comes first.
 
 ## Multicast and Broadcast
 
