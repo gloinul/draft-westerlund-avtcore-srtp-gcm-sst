@@ -5,7 +5,7 @@
 Audio/Video Transport Core Maintenance                     M. Westerlund
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                                Ericsson
-Expires: 19 December 2026                                   17 June 2026
+Expires: 4 January 2027                                      3 July 2026
 
 
    GCM-SST Authenticated Encryption in the Secure Real-time Transport
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 December 2026.
+   This Internet-Draft will expire on 4 January 2027.
 
 Copyright Notice
 
@@ -859,9 +859,9 @@ Table of Contents
      SRTP_AEAD_AES_256_GCM_SST_6   = {0x00, TBD4}
      SRTP_AEAD_AES_256_GCM_SST_12  = {0x00, TBD5}
      SRTP_AEAD_AES_256_GCM_SST_14  = {0x00, TBD6}
-     SRTP_AEAD_RIJNDAEL_GCM_SST_6  = {0x00, TBD8}
-     SRTP_AEAD_RIJNDAEL_GCM_SST_12 = {0x00, TBD9}
-     SRTP_AEAD_RIJNDAEL_GCM_SST_14 = {0x00, TBD10}
+     SRTP_AEAD_RIJNDAEL_GCM_SST_6  = {0x00, TBD7}
+     SRTP_AEAD_RIJNDAEL_GCM_SST_12 = {0x00, TBD8}
+     SRTP_AEAD_RIJNDAEL_GCM_SST_14 = {0x00, TBD9}
 
    The SRTP transform parameters for each protection profile are as
    follows:
@@ -965,7 +965,7 @@ Table of Contents
    | SRTP Encr.            | Value | Default Session   | Default Auth. |
    | Algorithm             |       | Encr.  Key Length | Tag Length    |
    +=======================+=======+===================+===============+
-   | AES-GCM-SST           | TBD7  | 16 octets         | variable      |
+   | AES-GCM-SST           | TBD10 | 16 octets         | variable      |
    +-----------------------+-------+-------------------+---------------+
    | RIJNDAEL-256-GCM-SST  | TBD11 | 32 octets         | variable      |
    +-----------------------+-------+-------------------+---------------+
@@ -1021,9 +1021,8 @@ Table of Contents
               Campagna, M., Maximov, A., and J. P. Mattsson, "Galois
               Counter Mode with Strong Secure Tags (GCM-SST)", Work in
               Progress, Internet-Draft, draft-mattsson-cfrg-aes-gcm-sst-
-              18, 19 February 2025,
-              <https://datatracker.ietf.org/doc/html/draft-mattsson-
-              cfrg-aes-gcm-sst-18>.
+              19, 2 July 2026, <https://datatracker.ietf.org/doc/html/
+              draft-mattsson-cfrg-aes-gcm-sst-19>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
