@@ -437,17 +437,17 @@ All AEAD algorithms used with SRTP/SRTCP MUST satisfy the following constraints:
 | A_MAX | Maximum Associated Data length | MUST be at least 12 octets |
 | N_MIN | Minimum nonce (IV) length | 12 octets (AES) or 28 octets (Rijndael) |
 | N_MAX | Maximum nonce (IV) length | 12 octets (AES) or 28 octets (Rijndael) |
-| P_MAX | Maximum Plaintext length | 2^16 bytes |
+| P_MAX | Maximum Plaintext length | 2^15 bytes (AES) or 2^16 bytes (Rijndael) |
 | C_MAX | Maximum ciphertext length | P_MAX + tag_length |
 {: title="AEAD Constraints for SRTP/SRTCP"}
 
 Additional parameters:
 
-- Q_MAX (maximum number of encryption invocations per key): For AES-GCM-SST cipher suites, Q_MAX is 2^32 for SRTP and 2^31 for SRTCP. For Rijndael-GCM-SST cipher suites, Q_MAX is 2^48 for SRTP and 2^31 for SRTCP. SRTP and SRTCP use separate derived keys and therefore have independent invocation counts.
+- Q_MAX (maximum number of encryption invocations per key): Q_MAX is 2^48 for SRTP and 2^31 for SRTCP. SRTP and SRTCP use separate derived keys and therefore have independent invocation counts.
 
 - V_MAX (maximum number of decryption invocations per key): For AES-GCM-SST cipher suites, V_MAX is 2^54. For Rijndael-GCM-SST cipher suites, V_MAX is 2^118.
 
-{{I-D.mattsson-cfrg-aes-gcm-sst}} requires that for AES-GCM-SST, protocols MUST enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With SRTP's P_MAX of 2^16 bytes and Q_MAX of 2^32, the product Q_MAX · P_MAX / 16 = 2^44, which is well within this bound. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint.
+For AES-GCM-SST, {{I-D.mattsson-cfrg-aes-gcm-sst}} requires that protocols MUST enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With Q_MAX of 2^48 and P_MAX of 2^15 bytes, the product Q_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX MAY be increased provided that Q_MAX is reduced accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey MUST be performed before Q_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 bytes with Q_MAX of 2^48.
 
 
 # Key Derivation Functions
@@ -477,7 +477,7 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 128 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_128_CM_PRF {{RFC3711}} |
-| Q_MAX (SRTP) | 2^32 encryption invocations |
+| Q_MAX (SRTP) | 2^48 encryption invocations |
 | Q_MAX (SRTCP) | 2^31 encryption invocations |
 | V_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 48 bits |
@@ -487,7 +487,7 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 128 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_128_CM_PRF {{RFC3711}} |
-| Q_MAX (SRTP) | 2^32 encryption invocations |
+| Q_MAX (SRTP) | 2^48 encryption invocations |
 | Q_MAX (SRTCP) | 2^31 encryption invocations |
 | V_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 96 bits |
@@ -497,7 +497,7 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 128 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_128_CM_PRF {{RFC3711}} |
-| Q_MAX (SRTP) | 2^32 encryption invocations |
+| Q_MAX (SRTP) | 2^48 encryption invocations |
 | Q_MAX (SRTCP) | 2^31 encryption invocations |
 | V_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 112 bits |
@@ -507,7 +507,7 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^32 encryption invocations |
+| Q_MAX (SRTP) | 2^48 encryption invocations |
 | Q_MAX (SRTCP) | 2^31 encryption invocations |
 | V_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 48 bits |
@@ -517,7 +517,7 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^32 encryption invocations |
+| Q_MAX (SRTP) | 2^48 encryption invocations |
 | Q_MAX (SRTCP) | 2^31 encryption invocations |
 | V_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 96 bits |
@@ -527,7 +527,7 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^32 encryption invocations |
+| Q_MAX (SRTP) | 2^48 encryption invocations |
 | Q_MAX (SRTCP) | 2^31 encryption invocations |
 | V_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 112 bits |
@@ -616,7 +616,7 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_function:          NULL
     auth_key_length:        N/A
     auth_tag_length:        N/A
-    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^32 SRTP packets
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
   SRTP_AEAD_AES_128_GCM_SST_12
     cipher:                 AES_128_GCM_SST
@@ -626,7 +626,7 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_function:          NULL
     auth_key_length:        N/A
     auth_tag_length:        N/A
-    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^32 SRTP packets
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
   SRTP_AEAD_AES_128_GCM_SST_14
     cipher:                 AES_128_GCM_SST
@@ -636,7 +636,7 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_function:          NULL
     auth_key_length:        N/A
     auth_tag_length:        N/A
-    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^32 SRTP packets
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
   SRTP_AEAD_AES_256_GCM_SST_6
     cipher:                 AES_256_GCM_SST
@@ -646,7 +646,7 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_function:          NULL
     auth_key_length:        N/A
     auth_tag_length:        N/A
-    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^32 SRTP packets
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
   SRTP_AEAD_AES_256_GCM_SST_12
     cipher:                 AES_256_GCM_SST
@@ -656,7 +656,7 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_function:          NULL
     auth_key_length:        N/A
     auth_tag_length:        N/A
-    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^32 SRTP packets
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
   SRTP_AEAD_AES_256_GCM_SST_14
     cipher:                 AES_256_GCM_SST
@@ -666,7 +666,7 @@ The SRTP transform parameters for each protection profile are as follows:
     auth_function:          NULL
     auth_key_length:        N/A
     auth_tag_length:        N/A
-    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^32 SRTP packets
+    maximum lifetime:       at most 2^31 SRTCP packets and at most 2^48 SRTP packets
 
   SRTP_AEAD_RIJNDAEL_GCM_SST_6
     cipher:                 RIJNDAEL_256_GCM_SST
