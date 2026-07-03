@@ -112,6 +112,9 @@ Associated Data:
 Plaintext:
 : Data that is both encrypted and authenticated.
 
+Ciphertext:
+: The output of the AEAD encryption function, consisting of the encrypted Plaintext followed by the authentication tag.
+
 Raw Data:
 : Data that is neither encrypted nor authenticated.
 
