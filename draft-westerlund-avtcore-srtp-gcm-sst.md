@@ -587,6 +587,10 @@ The GCM-SST tag_length SHOULD NOT be smaller than 4 bytes. Unlike AES-GCM, GCM-S
 
 GCM-SST MUST be used with replay protection. The SRTP sequence number and rollover counter, or the SRTCP index, provide the basis for replay protection. For examples of replay protection mechanisms, see {{RFC4303}} and {{RFC6479}}.
 
+## Multicast and Broadcast
+
+Although GCM-SST offers stronger security than AES-GCM for short tags, it is not ideal in multicast or broadcast settings. A single successful forgery against one recipient can be replayed against all other recipients sharing the same key. See Section 5.6 of {{I-D.mattsson-cfrg-aes-gcm-sst}} for further details.
+
 # IANA Considerations
 
 ## DTLS-SRTP
