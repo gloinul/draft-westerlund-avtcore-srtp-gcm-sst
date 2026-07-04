@@ -596,7 +596,7 @@ Implementations SHOULD rekey well before reaching Q_MAX. To minimize the impact 
 
 ## Multicast and Broadcast
 
-Although GCM-SST offers stronger security than AES-GCM for short tags, it is not ideal in multicast or broadcast settings. A single successful forgery against one recipient can be replayed against all other recipients sharing the same key. See Section 5.6 of {{I-D.mattsson-cfrg-aes-gcm-sst}} for further details.
+Although GCM-SST offers stronger security than AES-GCM for short tags, it is not ideal in multicast or broadcast settings. A few successful forgeries against one or more recipients enable the attacker to create a new forgery targeting all other recipients sharing the same key. See Section 5.6 of {{I-D.mattsson-cfrg-aes-gcm-sst}} for further details.
 
 # IANA Considerations
 
