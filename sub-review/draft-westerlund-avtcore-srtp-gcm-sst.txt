@@ -5,7 +5,7 @@
 Audio/Video Transport Core Maintenance                     M. Westerlund
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                                Ericsson
-Expires: 4 January 2027                                      3 July 2026
+Expires: 5 January 2027                                      4 July 2026
 
 
    GCM-SST Authenticated Encryption in the Secure Real-time Transport
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2027.
+   This Internet-Draft will expire on 5 January 2027.
 
 Copyright Notice
 
@@ -894,9 +894,10 @@ Table of Contents
 11.5.  Multicast and Broadcast
 
    Although GCM-SST offers stronger security than AES-GCM for short
-   tags, it is not ideal in multicast or broadcast settings.  A single
-   successful forgery against one recipient can be replayed against all
-   other recipients sharing the same key.  See Section 5.6 of
+   tags, it is not ideal in multicast or broadcast settings.  A few
+   successful forgeries against one or more recipients enable the
+   attacker to create a new forgery targeting all other recipients
+   sharing the same key.  See Section 5.6 of
    [I-D.mattsson-cfrg-aes-gcm-sst] for further details.
 
 12.  IANA Considerations
@@ -1074,8 +1075,8 @@ Table of Contents
               Campagna, M., Maximov, A., and J. P. Mattsson, "Galois
               Counter Mode with Strong Secure Tags (GCM-SST)", Work in
               Progress, Internet-Draft, draft-mattsson-cfrg-aes-gcm-sst-
-              19, 2 July 2026, <https://datatracker.ietf.org/doc/html/
-              draft-mattsson-cfrg-aes-gcm-sst-19>.
+              20, 4 July 2026, <https://datatracker.ietf.org/doc/html/
+              draft-mattsson-cfrg-aes-gcm-sst-20>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
