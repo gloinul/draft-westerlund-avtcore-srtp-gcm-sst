@@ -5,7 +5,7 @@
 Audio/Video Transport Core Maintenance                     M. Westerlund
 Internet-Draft                                         J. Preuß Mattsson
 Intended status: Standards Track                                Ericsson
-Expires: 5 January 2027                                      4 July 2026
+Expires: 7 January 2027                                      6 July 2026
 
 
    GCM-SST Authenticated Encryption in the Secure Real-time Transport
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 January 2027.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -601,23 +601,23 @@ Table of Contents
 
    Additional parameters:
 
-   *  Q_MAX (maximum number of encryption invocations per key): Q_MAX is
+   *  E_MAX (maximum number of encryption invocations per key): E_MAX is
       2^48 for SRTP and 2^31 for SRTCP.  SRTP and SRTCP use separate
       derived keys and therefore have independent invocation counts.
 
-   *  V_MAX (maximum number of decryption invocations per key): For AES-
-      GCM-SST cipher suites, V_MAX is 2^54.  For Rijndael-GCM-SST cipher
-      suites, V_MAX is 2^118.
+   *  D_MAX (maximum number of decryption invocations per key): For AES-
+      GCM-SST cipher suites, D_MAX is 2^54.  For Rijndael-GCM-SST cipher
+      suites, D_MAX is 2^118.
 
-   For AES-GCM-SST, [I-D.mattsson-cfrg-aes-gcm-sst] requires that
-   protocols MUST enforce Q_MAX · P_MAX / 16 ⪅ 2^59.  With Q_MAX of 2^48
-   and P_MAX of 2^15 octets, the product Q_MAX · P_MAX / 16 = 2^59,
-   which satisfies this bound.  If an application requires larger
-   packets, P_MAX MAY be increased provided that Q_MAX is reduced
-   accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and
-   a rekey MUST be performed before Q_MAX is reached.  For Rijndael-GCM-
-   SST, the 256-bit block size guarantees δ ≈ 1 without requiring this
-   constraint, and P_MAX is set to 2^16 octets with Q_MAX of 2^48.
+   For AES-GCM-SST, [I-D.mattsson-cfrg-aes-gcm-sst] recommends that
+   protocols enforce E_MAX · P_MAX / 16 ⪅ 2^59.  With E_MAX of 2^48 and
+   P_MAX of 2^15 octets, the product E_MAX · P_MAX / 16 = 2^59, which
+   satisfies this bound.  If an application requires larger packets,
+   P_MAX MAY be increased provided that E_MAX is reduced accordingly so
+   that E_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey MUST be
+   performed before E_MAX is reached.  For Rijndael-GCM-SST, the 256-bit
+   block size guarantees δ ≈ 1 without requiring this constraint, and
+   P_MAX is set to 2^16 octets with E_MAX of 2^48.
 
 9.  Key Derivation Functions
 
@@ -669,11 +669,11 @@ Table of Contents
      +--------------------------------+-----------------------------+
      | Key Derivation Function        | AES_128_CM_PRF [RFC3711]    |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations |
      +--------------------------------+-----------------------------+
-     | V_MAX                          | 2^54 decryption invocations |
+     | D_MAX                          | 2^54 decryption invocations |
      +--------------------------------+-----------------------------+
      | AEAD authentication tag length | 48 bits                     |
      +--------------------------------+-----------------------------+
@@ -689,11 +689,11 @@ Table of Contents
      +--------------------------------+-----------------------------+
      | Key Derivation Function        | AES_128_CM_PRF [RFC3711]    |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations |
      +--------------------------------+-----------------------------+
-     | V_MAX                          | 2^54 decryption invocations |
+     | D_MAX                          | 2^54 decryption invocations |
      +--------------------------------+-----------------------------+
      | AEAD authentication tag length | 96 bits                     |
      +--------------------------------+-----------------------------+
@@ -709,11 +709,11 @@ Table of Contents
      +--------------------------------+-----------------------------+
      | Key Derivation Function        | AES_128_CM_PRF [RFC3711]    |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations |
      +--------------------------------+-----------------------------+
-     | V_MAX                          | 2^54 decryption invocations |
+     | D_MAX                          | 2^54 decryption invocations |
      +--------------------------------+-----------------------------+
      | AEAD authentication tag length | 112 bits                    |
      +--------------------------------+-----------------------------+
@@ -729,11 +729,11 @@ Table of Contents
      +--------------------------------+-----------------------------+
      | Key Derivation Function        | AES_256_CM_PRF [RFC6188]    |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations |
      +--------------------------------+-----------------------------+
-     | V_MAX                          | 2^54 decryption invocations |
+     | D_MAX                          | 2^54 decryption invocations |
      +--------------------------------+-----------------------------+
      | AEAD authentication tag length | 48 bits                     |
      +--------------------------------+-----------------------------+
@@ -749,11 +749,11 @@ Table of Contents
      +--------------------------------+-----------------------------+
      | Key Derivation Function        | AES_256_CM_PRF [RFC6188]    |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations |
      +--------------------------------+-----------------------------+
-     | V_MAX                          | 2^54 decryption invocations |
+     | D_MAX                          | 2^54 decryption invocations |
      +--------------------------------+-----------------------------+
      | AEAD authentication tag length | 96 bits                     |
      +--------------------------------+-----------------------------+
@@ -769,11 +769,11 @@ Table of Contents
      +--------------------------------+-----------------------------+
      | Key Derivation Function        | AES_256_CM_PRF [RFC6188]    |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations |
      +--------------------------------+-----------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations |
      +--------------------------------+-----------------------------+
-     | V_MAX                          | 2^54 decryption invocations |
+     | D_MAX                          | 2^54 decryption invocations |
      +--------------------------------+-----------------------------+
      | AEAD authentication tag length | 112 bits                    |
      +--------------------------------+-----------------------------+
@@ -789,11 +789,11 @@ Table of Contents
      +--------------------------------+------------------------------+
      | Key Derivation Function        | AES_256_CM_PRF [RFC6188]     |
      +--------------------------------+------------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations  |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations  |
      +--------------------------------+------------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations  |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations  |
      +--------------------------------+------------------------------+
-     | V_MAX                          | 2^118 decryption invocations |
+     | D_MAX                          | 2^118 decryption invocations |
      +--------------------------------+------------------------------+
      | AEAD authentication tag length | 48 bits                      |
      +--------------------------------+------------------------------+
@@ -809,11 +809,11 @@ Table of Contents
      +--------------------------------+------------------------------+
      | Key Derivation Function        | AES_256_CM_PRF [RFC6188]     |
      +--------------------------------+------------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations  |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations  |
      +--------------------------------+------------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations  |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations  |
      +--------------------------------+------------------------------+
-     | V_MAX                          | 2^118 decryption invocations |
+     | D_MAX                          | 2^118 decryption invocations |
      +--------------------------------+------------------------------+
      | AEAD authentication tag length | 96 bits                      |
      +--------------------------------+------------------------------+
@@ -829,11 +829,11 @@ Table of Contents
      +--------------------------------+------------------------------+
      | Key Derivation Function        | AES_256_CM_PRF [RFC6188]     |
      +--------------------------------+------------------------------+
-     | Q_MAX (SRTP)                   | 2^48 encryption invocations  |
+     | E_MAX (SRTP)                   | 2^48 encryption invocations  |
      +--------------------------------+------------------------------+
-     | Q_MAX (SRTCP)                  | 2^31 encryption invocations  |
+     | E_MAX (SRTCP)                  | 2^31 encryption invocations  |
      +--------------------------------+------------------------------+
-     | V_MAX                          | 2^118 decryption invocations |
+     | D_MAX                          | 2^118 decryption invocations |
      +--------------------------------+------------------------------+
      | AEAD authentication tag length | 112 bits                     |
      +--------------------------------+------------------------------+
@@ -886,7 +886,7 @@ Table of Contents
 
 11.4.  Rekeying
 
-   Implementations SHOULD rekey well before reaching Q_MAX.  To minimize
+   Implementations SHOULD rekey well before reaching E_MAX.  To minimize
    the impact of key compromise, rekeying via ephemeral key exchange
    providing forward secrecy SHOULD occur after at most 1 hour or 2^30
    to 2^37 octets of data, whichever comes first.
@@ -1075,8 +1075,8 @@ Table of Contents
               Campagna, M., Maximov, A., and J. P. Mattsson, "Galois
               Counter Mode with Strong Secure Tags (GCM-SST)", Work in
               Progress, Internet-Draft, draft-mattsson-cfrg-aes-gcm-sst-
-              20, 4 July 2026, <https://datatracker.ietf.org/doc/html/
-              draft-mattsson-cfrg-aes-gcm-sst-20>.
+              21, 5 July 2026, <https://datatracker.ietf.org/doc/html/
+              draft-mattsson-cfrg-aes-gcm-sst-21>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
