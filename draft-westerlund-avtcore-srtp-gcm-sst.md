@@ -446,11 +446,11 @@ All AEAD algorithms used with SRTP/SRTCP MUST satisfy the following constraints:
 
 Additional parameters:
 
-- Q_MAX (maximum number of encryption invocations per key): Q_MAX is 2^48 for SRTP and 2^31 for SRTCP. SRTP and SRTCP use separate derived keys and therefore have independent invocation counts.
+- E_MAX (maximum number of encryption invocations per key): E_MAX is 2^48 for SRTP and 2^31 for SRTCP. SRTP and SRTCP use separate derived keys and therefore have independent invocation counts.
 
-- V_MAX (maximum number of decryption invocations per key): For AES-GCM-SST cipher suites, V_MAX is 2^54. For Rijndael-GCM-SST cipher suites, V_MAX is 2^118.
+- D_MAX (maximum number of decryption invocations per key): For AES-GCM-SST cipher suites, D_MAX is 2^54. For Rijndael-GCM-SST cipher suites, D_MAX is 2^118.
 
-For AES-GCM-SST, {{I-D.mattsson-cfrg-aes-gcm-sst}} requires that protocols MUST enforce Q_MAX · P_MAX / 16 ⪅ 2^59. With Q_MAX of 2^48 and P_MAX of 2^15 octets, the product Q_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX MAY be increased provided that Q_MAX is reduced accordingly so that Q_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey MUST be performed before Q_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 octets with Q_MAX of 2^48.
+For AES-GCM-SST, {{I-D.mattsson-cfrg-aes-gcm-sst}} recommends that protocols enforce E_MAX · P_MAX / 16 ⪅ 2^59. With E_MAX of 2^48 and P_MAX of 2^15 octets, the product E_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX MAY be increased provided that E_MAX is reduced accordingly so that E_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey MUST be performed before E_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 octets with E_MAX of 2^48.
 
 
 # Key Derivation Functions
@@ -480,9 +480,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 128 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_128_CM_PRF {{RFC3711}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^54 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 48 bits |
 {: title="AEAD_AES_128_GCM_SST_6 Crypto Suite"}
 
@@ -490,9 +490,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 128 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_128_CM_PRF {{RFC3711}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^54 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 96 bits |
 {: title="AEAD_AES_128_GCM_SST_12 Crypto Suite"}
 
@@ -500,9 +500,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 128 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_128_CM_PRF {{RFC3711}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^54 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 112 bits |
 {: title="AEAD_AES_128_GCM_SST_14 Crypto Suite"}
 
@@ -510,9 +510,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^54 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 48 bits |
 {: title="AEAD_AES_256_GCM_SST_6 Crypto Suite"}
 
@@ -520,9 +520,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^54 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 96 bits |
 {: title="AEAD_AES_256_GCM_SST_12 Crypto Suite"}
 
@@ -530,9 +530,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 96 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^54 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^54 decryption invocations |
 | AEAD authentication tag length | 112 bits |
 {: title="AEAD_AES_256_GCM_SST_14 Crypto Suite"}
 
@@ -540,9 +540,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 224 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^118 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^118 decryption invocations |
 | AEAD authentication tag length | 48 bits |
 {: title="AEAD_RIJNDAEL_GCM_SST_6 Crypto Suite"}
 
@@ -550,9 +550,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 224 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^118 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^118 decryption invocations |
 | AEAD authentication tag length | 96 bits |
 {: title="AEAD_RIJNDAEL_GCM_SST_12 Crypto Suite"}
 
@@ -560,9 +560,9 @@ The following GCM-SST cipher suites are defined for use with SRTP/SRTCP:
 | Master key length | 256 bits |
 | Master salt length | 224 bits |
 | Key Derivation Function | AES_256_CM_PRF {{RFC6188}} |
-| Q_MAX (SRTP) | 2^48 encryption invocations |
-| Q_MAX (SRTCP) | 2^31 encryption invocations |
-| V_MAX | 2^118 decryption invocations |
+| E_MAX (SRTP) | 2^48 encryption invocations |
+| E_MAX (SRTCP) | 2^31 encryption invocations |
+| D_MAX | 2^118 decryption invocations |
 | AEAD authentication tag length | 112 bits |
 {: title="AEAD_RIJNDAEL_GCM_SST_14 Crypto Suite"}
 
@@ -592,7 +592,7 @@ GCM-SST MUST be used with replay protection. The SRTP sequence number and rollov
 
 ## Rekeying
 
-Implementations SHOULD rekey well before reaching Q_MAX. To minimize the impact of key compromise, rekeying via ephemeral key exchange providing forward secrecy SHOULD occur after at most 1 hour or 2^30 to 2^37 octets of data, whichever comes first.
+Implementations SHOULD rekey well before reaching E_MAX. To minimize the impact of key compromise, rekeying via ephemeral key exchange providing forward secrecy SHOULD occur after at most 1 hour or 2^30 to 2^37 octets of data, whichever comes first.
 
 ## Multicast and Broadcast
 
