@@ -1098,19 +1098,9 @@ Table of Contents
               DOI 10.17487/RFC3830, August 2004,
               <https://www.rfc-editor.org/rfc/rfc3830>.
 
-   [RFC4568]  Andreasen, F., Baugher, M., and D. Wing, "Session
-              Description Protocol (SDP) Security Descriptions for Media
-              Streams", RFC 4568, DOI 10.17487/RFC4568, July 2006,
-              <https://www.rfc-editor.org/rfc/rfc4568>.
-
    [RFC5116]  McGrew, D., "An Interface and Algorithms for Authenticated
               Encryption", RFC 5116, DOI 10.17487/RFC5116, January 2008,
               <https://www.rfc-editor.org/rfc/rfc5116>.
-
-   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234,
-              DOI 10.17487/RFC5234, January 2008,
-              <https://www.rfc-editor.org/rfc/rfc5234>.
 
    [RFC5764]  McGrew, D. and E. Rescorla, "Datagram Transport Layer
               Security (DTLS) Extension to Establish Keys for the Secure
@@ -1136,12 +1126,6 @@ Table of Contents
    [RFC4303]  Kent, S., "IP Encapsulating Security Payload (ESP)",
               RFC 4303, DOI 10.17487/RFC4303, December 2005,
               <https://www.rfc-editor.org/rfc/rfc4303>.
-
-   [RFC4771]  Lehtovirta, V., Naslund, M., and K. Norrman, "Integrity
-              Transform Carrying Roll-Over Counter for the Secure Real-
-              time Transport Protocol (SRTP)", RFC 4771,
-              DOI 10.17487/RFC4771, January 2007,
-              <https://www.rfc-editor.org/rfc/rfc4771>.
 
    [RFC6479]  Zhang, X. and T. Tsou, "IPsec Anti-Replay Algorithm
               without Bit Shifting", RFC 6479, DOI 10.17487/RFC6479,
