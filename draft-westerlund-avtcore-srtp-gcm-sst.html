@@ -2,7 +2,7 @@
 <html lang="en" class="Internet-Draft">
 <head>
 <meta charset="utf-8">
-<meta content="Common,Latin" name="scripts">
+<meta content="Common,Greek,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>GCM-SST Authenticated Encryption in the Secure Real-time Transport Protocol (SRTP)</title>
 <meta content="Magnus Westerlund" name="author">
@@ -1051,7 +1051,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Westerlund &amp; Preuß Mattsson</td>
-<td class="center">Expires 4 January 2027</td>
+<td class="center">Expires 7 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-westerlund-avtcore-srtp-gcm-sst-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-03" class="published">3 July 2026</time>
+<time datetime="2026-07-06" class="published">6 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-04">4 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-07">7 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1123,7 +1123,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1252,6 +1252,12 @@ svg {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
                 <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-replay-protection" class="internal xref">Replay Protection</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="auto internal xref">11.4</a>.  <a href="#name-rekeying" class="internal xref">Rekeying</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="auto internal xref">11.5</a>.  <a href="#name-multicast-and-broadcast" class="internal xref">Multicast and Broadcast</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
@@ -1347,9 +1353,14 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <p id="section-2-3.8.1">Data that is both encrypted and authenticated.<a href="#section-2-3.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-3.9">Raw Data:</dt>
+<dt id="section-2-3.9">Ciphertext:</dt>
         <dd style="margin-left: 1.5em" id="section-2-3.10">
-          <p id="section-2-3.10.1">Data that is neither encrypted nor authenticated.<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
+          <p id="section-2-3.10.1">The output of the AEAD encryption function, consisting of the encrypted Plaintext followed by the authentication tag.<a href="#section-2-3.10.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-2-3.11">Raw Data:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.12">
+          <p id="section-2-3.12.1">Data that is neither encrypted nor authenticated.<a href="#section-2-3.12.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1426,7 +1437,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-handling-of-aead-authentica">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-handling-of-aead-authentica" class="section-name selfRef">Handling of AEAD Authentication</a>
         </h3>
-<p id="section-4.2-1">All incoming packets <span class="bcp14">MUST</span> pass AEAD authentication before any other action takes place. Plaintext and Associated Data <span class="bcp14">MUST NOT</span> be released until the AEAD authentication tag has been validated. Should the AEAD tag prove to be invalid, the packet <span class="bcp14">MUST</span> be discarded.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">All incoming packets <span class="bcp14">MUST</span> pass AEAD authentication before any other action takes place. Plaintext and Associated Data <span class="bcp14">MUST NOT</span> be released until the AEAD authentication tag has been validated. Should the AEAD authentication tag prove to be invalid, the packet <span class="bcp14">MUST</span> be discarded.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1857,8 +1868,7 @@ R:              authentication tag (NOT RECOMMENDED)             :
           <tr>
             <td class="text-left" rowspan="1" colspan="1">P_MAX</td>
             <td class="text-left" rowspan="1" colspan="1">Maximum Plaintext length</td>
-            <td class="text-left" rowspan="1" colspan="1">See <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span>
-</td>
+            <td class="text-left" rowspan="1" colspan="1">2^15 octets (AES) or 2^16 octets (Rijndael)</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">C_MAX</td>
@@ -1870,9 +1880,13 @@ R:              authentication tag (NOT RECOMMENDED)             :
 <p id="section-8-3">Additional parameters:<a href="#section-8-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-8-4.1">
-          <p id="section-8-4.1.1">Maximum number of invocations for a given instantiation: SRTP <span class="bcp14">MUST</span> be at most 2^48; SRTCP <span class="bcp14">MUST</span> be at most 2^31.<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
+          <p id="section-8-4.1.1">E_MAX (maximum number of encryption invocations per key): E_MAX is 2^48 for SRTP and 2^31 for SRTCP. SRTP and SRTCP use separate derived keys and therefore have independent invocation counts.<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-8-4.2">
+          <p id="section-8-4.2.1">D_MAX (maximum number of decryption invocations per key): For AES-GCM-SST cipher suites, D_MAX is 2^54. For Rijndael-GCM-SST cipher suites, D_MAX is 2^118.<a href="#section-8-4.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
+<p id="section-8-5">For AES-GCM-SST, <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span> recommends that protocols enforce E_MAX · P_MAX / 16 ⪅ 2^59. With E_MAX of 2^48 and P_MAX of 2^15 octets, the product E_MAX · P_MAX / 16 = 2^59, which satisfies this bound. If an application requires larger packets, P_MAX <span class="bcp14">MAY</span> be increased provided that E_MAX is reduced accordingly so that E_MAX · P_MAX / 16 ⪅ 2^59 remains satisfied, and a rekey <span class="bcp14">MUST</span> be performed before E_MAX is reached. For Rijndael-GCM-SST, the 256-bit block size guarantees δ ≈ 1 without requiring this constraint, and P_MAX is set to 2^16 octets with E_MAX of 2^48.<a href="#section-8-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-derivation-functions">
@@ -1976,12 +1990,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^54 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2015,12 +2033,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^54 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2054,12 +2076,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^54 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2093,12 +2119,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^54 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2132,12 +2162,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^54 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2171,12 +2205,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^54 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2210,12 +2248,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^118 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2249,12 +2291,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^118 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2288,12 +2334,16 @@ R:              authentication tag (NOT RECOMMENDED)             :
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^48 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^48 encryption invocations</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Maximum key lifetime (SRTCP)</td>
-            <td class="text-left" rowspan="1" colspan="1">2^31 packets</td>
+            <td class="text-left" rowspan="1" colspan="1">E_MAX (SRTCP)</td>
+            <td class="text-left" rowspan="1" colspan="1">2^31 encryption invocations</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">D_MAX</td>
+            <td class="text-left" rowspan="1" colspan="1">2^118 decryption invocations</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">AEAD authentication tag length</td>
@@ -2338,7 +2388,7 @@ R:              authentication tag (NOT RECOMMENDED)             :
         <h3 id="name-size-of-the-authentication-">
 <a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-size-of-the-authentication-" class="section-name selfRef">Size of the Authentication Tag</a>
         </h3>
-<p id="section-11.2-1">The GCM-SST tag_length <span class="bcp14">SHOULD NOT</span> be smaller than 4 bytes. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations <span class="bcp14">MUST</span> use the tag length associated with the negotiated cipher suite and <span class="bcp14">MUST NOT</span> truncate or extend the tag.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">The GCM-SST tag_length <span class="bcp14">SHOULD NOT</span> be smaller than 4 octets. Unlike AES-GCM, GCM-SST provides near-ideal forgery probabilities even for short tags, making 48-bit tags suitable for applications such as audio packet encryption where overhead is critical. The 96-bit and 112-bit tag lengths provide higher security margins suitable for most other SRTP use cases. Implementations <span class="bcp14">MUST</span> use the tag length associated with the negotiated cipher suite and <span class="bcp14">MUST NOT</span> truncate or extend the tag.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="replay-protection">
@@ -2347,6 +2397,22 @@ R:              authentication tag (NOT RECOMMENDED)             :
 <a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-replay-protection" class="section-name selfRef">Replay Protection</a>
         </h3>
 <p id="section-11.3-1">GCM-SST <span class="bcp14">MUST</span> be used with replay protection. The SRTP sequence number and rollover counter, or the SRTCP index, provide the basis for replay protection. For examples of replay protection mechanisms, see <span>[<a href="#RFC4303" class="cite xref">RFC4303</a>]</span> and <span>[<a href="#RFC6479" class="cite xref">RFC6479</a>]</span>.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="rekeying">
+<section id="section-11.4">
+        <h3 id="name-rekeying">
+<a href="#section-11.4" class="section-number selfRef">11.4. </a><a href="#name-rekeying" class="section-name selfRef">Rekeying</a>
+        </h3>
+<p id="section-11.4-1">Implementations <span class="bcp14">SHOULD</span> rekey well before reaching E_MAX. To minimize the impact of key compromise, rekeying via ephemeral key exchange providing forward secrecy <span class="bcp14">SHOULD</span> occur after at most 1 hour or 2^30 to 2^37 octets of data, whichever comes first.<a href="#section-11.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="multicast-and-broadcast">
+<section id="section-11.5">
+        <h3 id="name-multicast-and-broadcast">
+<a href="#section-11.5" class="section-number selfRef">11.5. </a><a href="#name-multicast-and-broadcast" class="section-name selfRef">Multicast and Broadcast</a>
+        </h3>
+<p id="section-11.5-1">Although GCM-SST offers stronger security than AES-GCM for short tags, it is not ideal in multicast or broadcast settings. A few successful forgeries against one or more recipients enable the attacker to create a new forgery targeting all other recipients sharing the same key. See Section 5.6 of <span>[<a href="#I-D.mattsson-cfrg-aes-gcm-sst" class="cite xref">I-D.mattsson-cfrg-aes-gcm-sst</a>]</span> for further details.<a href="#section-11.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2600,7 +2666,7 @@ R:              authentication tag (NOT RECOMMENDED)             :
 <dl class="references">
 <dt id="I-D.mattsson-cfrg-aes-gcm-sst">[I-D.mattsson-cfrg-aes-gcm-sst]</dt>
         <dd>
-<span class="refAuthor">Campagna, M.</span>, <span class="refAuthor">Maximov, A.</span>, and <span class="refAuthor">J. P. Mattsson</span>, <span class="refTitle">"Galois Counter Mode with Strong Secure Tags (GCM-SST)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-mattsson-cfrg-aes-gcm-sst-19</span>, <time datetime="2026-07-02" class="refDate">2 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-mattsson-cfrg-aes-gcm-sst-19">https://datatracker.ietf.org/doc/html/draft-mattsson-cfrg-aes-gcm-sst-19</a>&gt;</span>. </dd>
+<span class="refAuthor">Campagna, M.</span>, <span class="refAuthor">Maximov, A.</span>, and <span class="refAuthor">J. P. Mattsson</span>, <span class="refTitle">"Galois Counter Mode with Strong Secure Tags (GCM-SST)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-mattsson-cfrg-aes-gcm-sst-21</span>, <time datetime="2026-07-05" class="refDate">5 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-mattsson-cfrg-aes-gcm-sst-21">https://datatracker.ietf.org/doc/html/draft-mattsson-cfrg-aes-gcm-sst-21</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
