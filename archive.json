@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-05T02:45:47.491399+00:00",
+  "timestamp": "2026-07-07T02:46:54.931167+00:00",
   "repo": "gloinul/draft-westerlund-avtcore-srtp-gcm-sst",
   "labels": [
     {
@@ -56,26 +56,42 @@
       "id": "PR_kwDOSg17_87tnKkc",
       "title": "Sub review",
       "url": "https://github.com/gloinul/draft-westerlund-avtcore-srtp-gcm-sst/pull/1",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "gloinul",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-07-03T13:50:22Z",
-      "updatedAt": "2026-07-04T14:54:54Z",
+      "updatedAt": "2026-07-06T08:23:47Z",
       "baseRepository": "gloinul/draft-westerlund-avtcore-srtp-gcm-sst",
       "baseRefName": "main",
       "baseRefOid": "c7a4f9d482f18a7c440029f256e766382671ba32",
       "headRepository": "gloinul/draft-westerlund-avtcore-srtp-gcm-sst",
       "headRefName": "sub-review",
-      "headRefOid": "99405122d784242777d7a24262d0df6963febb5e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "c66c57eeaca8bb269d8f16e343dd95b4db4c4963",
+      "closedAt": "2026-07-06T08:23:47Z",
+      "mergedAt": "2026-07-06T08:23:47Z",
+      "mergedBy": "gloinul",
+      "mergeCommit": {
+        "oid": "fd12cf3f8e13cb7f9fd9a77cae7bd66ba1bf3a3f"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOSg17_88AAAABFCfzYA",
+          "commit": {
+            "abbreviatedOid": "c66c57e"
+          },
+          "author": "emanjon",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "I changed to E_MAX and D_MAC in -21 so people don't have to remember to new random letters.\n2^59 is now a recommendations. Both of the general bounds\n\u2113 \u226a 2^(m - t) .\nE_MAX \u22c5 P_MAX \u22c5 8 / b + 3 \u22c5 D_MAX \u226a 2^(b/2)\n\nDetermines how close \u03b5 and \u03b4 are to 1 in the formula\nE(F) \u2248 \u03b4 \u22c5 \u03b5 \u22c5 v / 2^t\n\nThere is no single correct answers on how close to 1 they need to be. \nE_MAX \u22c5 P_MAX / 16 = 2^60 would also be ok.\n\nThe change to A_MAX \u2248 P_MAX / 2^4 improves \u03b5 with P still 2^16",
+          "createdAt": "2026-07-06T05:40:01Z",
+          "updatedAt": "2026-07-06T05:40:01Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
